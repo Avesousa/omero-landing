@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Omero — Brand Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #111827; line-height: 1.5; }
+    .page { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+    /* Header */
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; padding-bottom: 32px; border-bottom: 2px solid #E5E7EB; }
+    .header-logo { display: flex; align-items: center; gap: 14px; }
+    .header-icon { width: 48px; height: 48px; }
+    .header-wordmark { font-size: 38px; font-weight: 800; color: #1E40AF; letter-spacing: -1px; }
+    .header-tag { font-size: 13px; font-weight: 500; color: #6B7280; margin-left: auto; }
+
+    /* Section layout */
+    .section { margin-bottom: 56px; }
+    .section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 20px; }
+    .section-heading { font-size: 22px; font-weight: 800; color: #111827; margin-bottom: 20px; }
+
+    /* Logo showcase */
+    .logo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .logo-card { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px 24px; }
+    .logo-card.dark { background: #111827; border-color: #374151; }
+    .logo-card img { max-width: 100%; height: auto; }
+    .logo-card-label { font-size: 12px; font-weight: 600; color: #6B7280; margin-top: 16px; }
+    .logo-card.dark .logo-card-label { color: #9CA3AF; }
+
+    /* Favicon showcase */
+    .favicon-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .favicon-item { text-align: center; }
+    .favicon-item img { display: block; margin: 0 auto 8px; }
+    .favicon-item span { font-size: 12px; color: #6B7280; font-weight: 500; }
+
+    /* Color palette */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+    .color-card { border-radius: 12px; overflow: hidden; border: 1px solid #E5E7EB; }
+    .color-swatch { height: 100px; }
+    .color-info { padding: 12px; background: white; }
+    .color-name { font-size: 13px; font-weight: 700; color: #111827; }
+    .color-hex { font-size: 12px; font-weight: 600; color: #6B7280; font-family: monospace; margin-top: 2px; }
+    .color-rgb { font-size: 11px; color: #9CA3AF; font-family: monospace; margin-top: 2px; }
+    .color-role { font-size: 11px; color: #9CA3AF; margin-top: 4px; }
+
+    /* Typography */
+    .type-specimen { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px; margin-bottom: 12px; }
+    .type-specimen .sample { color: #111827; }
+    .type-specimen .meta { font-size: 11px; font-weight: 600; color: #9CA3AF; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; }
+    .type-h1 { font-size: 48px; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; }
+    .type-h2 { font-size: 36px; font-weight: 800; line-height: 1.15; letter-spacing: -1px; }
+    .type-h3 { font-size: 24px; font-weight: 700; line-height: 1.25; }
+    .type-body { font-size: 16px; font-weight: 500; line-height: 1.6; }
+    .type-small { font-size: 14px; font-weight: 500; line-height: 1.5; color: #6B7280; }
+    .type-caption { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #9CA3AF; }
+
+    /* Tone of voice */
+    .tone-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .tone-card { background: white; border: 1px solid #E5E7EB; border-radius: 10px; padding: 18px; }
+    .tone-card .adjective { font-size: 16px; font-weight: 800; color: #1E40AF; margin-bottom: 4px; }
+    .tone-card .description { font-size: 13px; color: #6B7280; line-height: 1.4; }
+
+    /* Do/Don't */
+    .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rules-col { border-radius: 12px; padding: 20px; }
+    .rules-col.do { background: #F0FDF4; border: 1px solid #BBF7D0; }
+    .rules-col.dont { background: #FFF1F2; border: 1px solid #FECDD3; }
+    .rules-col h4 { font-size: 13px; font-weight: 800; margin-bottom: 12px; }
+    .rules-col.do h4 { color: #16A34A; }
+    .rules-col.dont h4 { color: #DC2626; }
+    .rules-col li { font-size: 13px; color: #374151; line-height: 1.6; margin-left: 16px; }
+
+    /* Footer */
+    .footer { border-top: 1px solid #E5E7EB; padding-top: 24px; text-align: center; font-size: 12px; color: #9CA3AF; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">
+      <svg class="header-icon" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="10" fill="#1E40AF"/>
+        <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"/>
+        <polygon points="24,7 29,14 19,14" fill="white"/>
+      </svg>
+      <span class="header-wordmark">omero</span>
+    </div>
+    <span class="header-tag">Brand Style Guide — v1.0 · Abril 2026</span>
+  </div>
+
+  <!-- 1. LOGOS -->
+  <div class="section">
+    <div class="section-title">01 — Logo</div>
+    <div class="logo-grid">
+
+      <div class="logo-card">
+        <svg width="224" height="48" viewBox="0 0 224 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&amp;display=swap');
+            .wm { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; font-size: 38px; fill: #1E40AF; letter-spacing: -1px; }</style>
+          </defs>
+          <rect width="48" height="48" rx="10" fill="#1E40AF"/>
+          <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"/>
+          <polygon points="24,7 29,14 19,14" fill="white"/>
+          <text x="62" y="38" class="wm">omero</text>
+        </svg>
+        <div class="logo-card-label">Logo completo — uso principal</div>
+      </div>
+
+      <div class="logo-card">
+        <svg width="160" height="48" viewBox="0 0 160 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&amp;display=swap');
+            .wm2 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; font-size: 38px; fill: #1E40AF; letter-spacing: -1px; }</style>
+          </defs>
+          <text x="0" y="38" class="wm2">omero</text>
+        </svg>
+        <div class="logo-card-label">Solo wordmark — encabezados de doc</div>
+      </div>
+
+      <div class="logo-card" style="max-width: 120px;">
+        <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="10" fill="#1E40AF"/>
+          <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"/>
+          <polygon points="24,7 29,14 19,14" fill="white"/>
+        </svg>
+        <div class="logo-card-label">Solo ícono — favicon, app icon</div>
+      </div>
+
+      <div class="logo-card dark">
+        <svg width="224" height="48" viewBox="0 0 224 48" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&amp;display=swap');
+            .wm3 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; font-size: 38px; fill: white; letter-spacing: -1px; }</style>
+          </defs>
+          <rect width="48" height="48" rx="10" fill="white" fill-opacity="0.15"/>
+          <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"/>
+          <polygon points="24,7 29,14 19,14" fill="white"/>
+          <text x="62" y="38" class="wm3">omero</text>
+        </svg>
+        <div class="logo-card-label">Versión blanca — fondos oscuros</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. FAVICON -->
+  <div class="section">
+    <div class="section-title">02 — Favicon &amp; App Icon</div>
+    <div style="background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px;">
+      <div class="favicon-row">
+        <div class="favicon-item">
+          <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="7" fill="#1E40AF"/>
+            <circle cx="16" cy="17" r="7.5" fill="none" stroke="white" stroke-width="4"/>
+            <polygon points="16,5 20,10 12,10" fill="white"/>
+          </svg>
+          <span>16×16</span>
+        </div>
+        <div class="favicon-item">
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="7" fill="#1E40AF"/>
+            <circle cx="16" cy="17" r="7.5" fill="none" stroke="white" stroke-width="4"/>
+            <polygon points="16,5 20,10 12,10" fill="white"/>
+          </svg>
+          <span>32×32</span>
+        </div>
+        <div class="favicon-item">
+          <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="14" fill="#1E40AF"/>
+            <circle cx="32" cy="34" r="15" fill="none" stroke="white" stroke-width="8"/>
+            <polygon points="32,9 40,20 24,20" fill="white"/>
+          </svg>
+          <span>64×64</span>
+        </div>
+        <div class="favicon-item">
+          <svg width="96" height="96" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#1E40AF"/>
+            <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"/>
+            <polygon points="24,7 29,14 19,14" fill="white"/>
+          </svg>
+          <span>App icon (96+)</span>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: #9CA3AF; margin-top: 20px;">
+        El ícono funciona a 16px: fondo azul sólido + anillo blanco + triángulo superior. Exportar como PNG desde los archivos SVG en <code>/public/brand/</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. COLOR PALETTE -->
+  <div class="section">
+    <div class="section-title">03 — Paleta de colores</div>
+    <div class="color-grid">
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#1E40AF;"></div>
+        <div class="color-info">
+          <div class="color-name">Azul Omero</div>
+          <div class="color-hex">#1E40AF</div>
+          <div class="color-rgb">RGB(30, 64, 175)</div>
+          <div class="color-role">El alma — primario</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#EA580C;"></div>
+        <div class="color-info">
+          <div class="color-name">Naranja Acción</div>
+          <div class="color-hex">#EA580C</div>
+          <div class="color-rgb">RGB(234, 88, 12)</div>
+          <div class="color-role">CTA — energía</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#16A34A;"></div>
+        <div class="color-info">
+          <div class="color-name">Verde Plata</div>
+          <div class="color-hex">#16A34A</div>
+          <div class="color-rgb">RGB(22, 163, 74)</div>
+          <div class="color-role">Éxito — crecimiento</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F9FAFB; border-bottom: 1px solid #E5E7EB;"></div>
+        <div class="color-info">
+          <div class="color-name">Blanco Suave</div>
+          <div class="color-hex">#F9FAFB</div>
+          <div class="color-rgb">RGB(249, 250, 251)</div>
+          <div class="color-role">Fondo secciones</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#111827;"></div>
+        <div class="color-info">
+          <div class="color-name">Gris Oscuro</div>
+          <div class="color-hex">#111827</div>
+          <div class="color-rgb">RGB(17, 24, 39)</div>
+          <div class="color-role">Texto principal</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#6B7280;"></div>
+        <div class="color-info">
+          <div class="color-name">Gris Medio</div>
+          <div class="color-hex">#6B7280</div>
+          <div class="color-rgb">RGB(107, 114, 128)</div>
+          <div class="color-role">Texto secundario</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4. TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-title">04 — Tipografía · Inter (Google Fonts)</div>
+
+    <div class="type-specimen">
+      <div class="meta">H1 · Inter 800 · 48px · tracking -1.5px</div>
+      <div class="sample type-h1">Cobrá sin complicaciones</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">H2 · Inter 800 · 36px · tracking -1px</div>
+      <div class="sample type-h2">Todo en una sola pantalla</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">H3 · Inter 700 · 24px</div>
+      <div class="sample type-h3">Punto de venta para el comercio argentino</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">Body · Inter 500 · 16px · line-height 1.6</div>
+      <div class="sample type-body">Omero es el sistema de gestión para negocios físicos que quieren vender más, cobrar mejor y entender su negocio en tiempo real. Sin planillas, sin dolores de cabeza.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">Small / Lead · Inter 500 · 14px</div>
+      <div class="sample type-small">Más de 800 comercios en Argentina ya usan Omero para crecer.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="meta">Caption / Label · Inter 600 · 12px · uppercase</div>
+      <div class="sample type-caption">Precio mensual · Sin contrato · Cancelá cuando quieras</div>
+    </div>
+  </div>
+
+  <!-- 5. TONE OF VOICE -->
+  <div class="section">
+    <div class="section-title">05 — Tono de voz</div>
+    <div class="tone-grid">
+      <div class="tone-card">
+        <div class="adjective">Directo</div>
+        <div class="description">Sin rodeos. El comerciante está ocupado. Ir al punto.</div>
+      </div>
+      <div class="tone-card">
+        <div class="adjective">Local</div>
+        <div class="description">Hablar argentino. "Plata", "cobrar", "negocio", no "revenue" ni "checkout".</div>
+      </div>
+      <div class="tone-card">
+        <div class="adjective">Confiable</div>
+        <div class="description">Datos reales, no promesas vacías. Mostrar números, testimonios.</div>
+      </div>
+      <div class="tone-card">
+        <div class="adjective">Optimista</div>
+        <div class="description">El problema existe, la solución es Omero. Tono positivo, nunca alarmista.</div>
+      </div>
+      <div class="tone-card">
+        <div class="adjective">Simple</div>
+        <div class="description">Frases cortas. Verbos activos. Párrafos de máximo 3 líneas.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. DO / DON'T -->
+  <div class="section">
+    <div class="section-title">06 — Uso del logo · Do &amp; Don't</div>
+    <div class="rules-grid">
+      <div class="rules-col do">
+        <h4>✓ Hacer</h4>
+        <ul>
+          <li>Usar el logo completo en landing y materiales principales</li>
+          <li>Mantener mínimo 16px de espacio libre alrededor del logo</li>
+          <li>Usar versión blanca sobre fondos azul oscuro o negro</li>
+          <li>Respetar los colores oficiales de la paleta</li>
+          <li>Escalar proporcionalmente</li>
+        </ul>
+      </div>
+      <div class="rules-col dont">
+        <h4>✗ No hacer</h4>
+        <ul>
+          <li>Distorsionar o estirar el logo</li>
+          <li>Cambiar colores fuera de la paleta oficial</li>
+          <li>Poner el logo sobre fondos con poco contraste</li>
+          <li>Agregar sombras, bordes o efectos no aprobados</li>
+          <li>Usar el ícono solo sin contexto de marca suficiente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Omero Brand Guide v1.0 · Generado por el equipo de diseño · Abril 2026
+    · Archivos en <code>/public/brand/</code>
+  </div>
+
+</div>
+</body>
+</html>

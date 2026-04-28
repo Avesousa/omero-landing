@@ -43,6 +43,14 @@ export const metadata: Metadata = {
       "Controlá tu inventario, márgenes y precios desde cualquier dispositivo. Empezá gratis por 14 días.",
     images: [`${siteUrl}/og-image.png`],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon-32.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/brand/favicon-64.svg", sizes: "64x64", type: "image/svg+xml" },
+    ],
+    apple: "/brand/favicon-64.svg",
+  },
   robots: {
     index: true,
     follow: true,
