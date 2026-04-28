@@ -2,8 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design system tokens ──────────────────────────────── */
 :root {
   --font-inter: "Inter", sans-serif;
+
+  /* Omero Brand */
+  --color-primary:       #1E40AF;
+  --color-primary-light: #3B82F6;
+  --color-primary-deep:  #1e3a8a;
+
+  /* Nocturne Surfaces */
+  --color-bg:              #041329;
+  --color-surface:         #112036;
+  --color-surface-low:     #0d1c32;
+  --color-surface-high:    #1c2a41;
+  --color-surface-highest: #27354c;
+
+  /* Text */
+  --color-text:           #d6e3ff;
+  --color-text-secondary: #b6c6ed;
+  --color-text-muted:     #6b7280;
+
+  /* Accents */
+  --color-accent:  #FF6B00;
+  --color-accent-dim: #E65A00;
+  --color-teal:    #38DEBB;
+  --color-error:   #ffb4ab;
+
+  /* Border */
+  --color-border: #233554;
 }
 
 html {
@@ -13,13 +40,13 @@ html {
 body {
   font-family: var(--font-inter), sans-serif;
   font-size: 16px;
-  color: #111827;
-  background-color: #ffffff;
+  color: var(--color-text);
+  background-color: var(--color-bg);
 }
 
 /* ─── Gradient text ────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #F59E0B 100%);
+  background: linear-gradient(135deg, #FF6B00 0%, #ffb693 50%, #FF6B00 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -28,7 +55,16 @@ body {
 }
 
 .gradient-text-blue {
-  background: linear-gradient(135deg, #93C5FD 0%, #BFDBFE 50%, #93C5FD 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #93C5FD 50%, #3B82F6 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.gradient-text-teal {
+  background: linear-gradient(135deg, #38DEBB 0%, #5ffbd6 50%, #38DEBB 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -38,6 +74,12 @@ body {
 
 /* ─── Animated hero background ─────────────────────────── */
 .hero-bg {
+  background: linear-gradient(135deg, #010e24 0%, #041329 40%, #112036 70%, #1c2a41 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.hero-bg-primary {
   background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 40%, #1d4ed8 70%, #2563eb 100%);
   background-size: 300% 300%;
   animation: gradientShift 8s ease infinite;
@@ -51,21 +93,28 @@ body {
 
 /* ─── Glow effects ──────────────────────────────────────── */
 .glow-accent {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.4), 0 0 40px rgba(255, 107, 0, 0.15);
 }
 
 .glow-primary {
-  box-shadow: 0 0 30px rgba(30, 64, 175, 0.3), 0 4px 24px rgba(30, 64, 175, 0.2);
+  box-shadow: 0 0 30px rgba(30, 64, 175, 0.4), 0 4px 24px rgba(30, 64, 175, 0.2);
 }
 
-.glow-success {
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+.glow-teal {
+  box-shadow: 0 0 20px rgba(56, 222, 187, 0.4), 0 0 40px rgba(56, 222, 187, 0.15);
+}
+
+/* ─── Glass card (Nocturne style) ───────────────────────── */
+.glass-card {
+  background: linear-gradient(180deg, #112036 0%, #0d1c32 100%);
+  border-top: 1px solid rgba(35, 53, 84, 0.6);
+  border-left: 1px solid rgba(35, 53, 84, 0.6);
 }
 
 /* ─── Gradient border card ──────────────────────────────── */
 .card-gradient-border {
   position: relative;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(17, 32, 54, 0.8);
   border-radius: 16px;
 }
 
@@ -75,7 +124,7 @@ body {
   inset: 0;
   border-radius: 16px;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
+  background: linear-gradient(135deg, rgba(255,107,0,0.3), rgba(30,64,175,0.2));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -84,12 +133,25 @@ body {
 
 /* ─── Pricing Pro highlight ─────────────────────────────── */
 .pricing-pro {
-  background: linear-gradient(145deg, #ffffff 0%, #eff6ff 100%);
-  box-shadow: 0 8px 40px rgba(30, 64, 175, 0.18), 0 2px 8px rgba(30, 64, 175, 0.08);
-  border: 2px solid #3B82F6 !important;
+  background: linear-gradient(145deg, #112036 0%, #0d1c32 100%);
+  box-shadow: 0 8px 40px rgba(255, 107, 0, 0.18), 0 2px 8px rgba(255, 107, 0, 0.08);
+  border: 2px solid #FF6B00 !important;
   transform: scale(1.04);
   position: relative;
   z-index: 2;
+}
+
+/* ─── Orange CTA button ─────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(180deg, #FF6B00 0%, #E65A00 100%);
+  color: white;
+  border: 1px solid #ff8533;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #ff7b1a 0%, #f06400 100%);
+  transform: scale(1.02);
 }
 
 /* ─── Shimmer animation ─────────────────────────────────── */
@@ -115,13 +177,13 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10B981;
+  background: #38DEBB;
   animation: livePulse 1.8s ease-in-out infinite;
 }
 
 @keyframes livePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
-  50%       { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 222, 187, 0.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(56, 222, 187, 0);  }
 }
 
 /* ─── Float animation ───────────────────────────────────── */
@@ -130,7 +192,7 @@ body {
   50%       { transform: translateY(-10px); }
 }
 
-/* ─── Noise texture overlay (subtle grain) ──────────────── */
+/* ─── Noise texture overlay ─────────────────────────────── */
 .noise::after {
   content: "";
   position: absolute;
@@ -140,8 +202,21 @@ body {
   opacity: 0.4;
 }
 
-/* ─── Scrollbar (subtle) ────────────────────────────────── */
+/* ─── Ambient background blobs ──────────────────────────── */
+.ambient-blob-orange {
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.08) 0%, transparent 70%);
+}
+
+.ambient-blob-blue {
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.12) 0%, transparent 70%);
+}
+
+.ambient-blob-teal {
+  background: radial-gradient(circle, rgba(56, 222, 187, 0.06) 0%, transparent 70%);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+::-webkit-scrollbar-track { background: #041329; }
+::-webkit-scrollbar-thumb { background: #374767; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FF6B00; }

@@ -18,6 +18,9 @@
     .header-icon { width: 48px; height: 48px; }
     .header-wordmark { font-size: 38px; font-weight: 800; color: #1E40AF; letter-spacing: -1px; }
     .header-tag { font-size: 13px; font-weight: 500; color: #6B7280; margin-left: auto; }
+    .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
+    .badge-omero { background: #EFF6FF; color: #1E40AF; }
+    .badge-nocturne { background: #FFF7ED; color: #EA580C; }
 
     /* Section layout */
     .section { margin-bottom: 56px; }
@@ -197,69 +200,124 @@
 
   <!-- 3. COLOR PALETTE -->
   <div class="section">
-    <div class="section-title">03 — Paleta de colores</div>
-    <div class="color-grid">
+    <div class="section-title">03 — Paleta de colores <span style="font-size:11px;color:#9CA3AF;font-weight:500;letter-spacing:0;">· Omero v1.0 + Nocturne SaaS (Stitch)</span></div>
+
+    <p style="font-size:13px;color:#6B7280;margin-bottom:20px;line-height:1.6;">
+      La paleta combina la identidad Omero (Azul aprobado por CEO) con el sistema Nocturne SaaS generado en Google Stitch.
+      El Azul Omero es el ancla de marca; los fondos dark navy y el naranja eléctrico vienen de Nocturne.
+    </p>
+
+    <div style="margin-bottom:12px;font-size:12px;font-weight:700;color:#374151;letter-spacing:0.04em;text-transform:uppercase;">Colores de marca</div>
+    <div class="color-grid" style="margin-bottom:28px;">
 
       <div class="color-card">
         <div class="color-swatch" style="background:#1E40AF;"></div>
         <div class="color-info">
-          <div class="color-name">Azul Omero</div>
+          <div class="color-name">Azul Omero <span class="badge badge-omero">Aprobado</span></div>
           <div class="color-hex">#1E40AF</div>
           <div class="color-rgb">RGB(30, 64, 175)</div>
-          <div class="color-role">El alma — primario</div>
+          <div class="color-role">Brand soul — primario</div>
         </div>
       </div>
 
       <div class="color-card">
-        <div class="color-swatch" style="background:#EA580C;"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#FF6B00,#E65A00);"></div>
         <div class="color-info">
-          <div class="color-name">Naranja Acción</div>
-          <div class="color-hex">#EA580C</div>
-          <div class="color-rgb">RGB(234, 88, 12)</div>
-          <div class="color-role">CTA — energía</div>
+          <div class="color-name">Orange Eléctrico <span class="badge badge-nocturne">Nocturne</span></div>
+          <div class="color-hex">#FF6B00</div>
+          <div class="color-rgb">RGB(255, 107, 0)</div>
+          <div class="color-role">CTA — alta intención</div>
         </div>
       </div>
 
       <div class="color-card">
-        <div class="color-swatch" style="background:#16A34A;"></div>
+        <div class="color-swatch" style="background:#38DEBB;"></div>
         <div class="color-info">
-          <div class="color-name">Verde Plata</div>
-          <div class="color-hex">#16A34A</div>
-          <div class="color-rgb">RGB(22, 163, 74)</div>
+          <div class="color-name">Teal Nocturne <span class="badge badge-nocturne">Nocturne</span></div>
+          <div class="color-hex">#38DEBB</div>
+          <div class="color-rgb">RGB(56, 222, 187)</div>
           <div class="color-role">Éxito — crecimiento</div>
         </div>
       </div>
 
+    </div>
+
+    <div style="margin-bottom:12px;font-size:12px;font-weight:700;color:#374151;letter-spacing:0.04em;text-transform:uppercase;">Fondos & Superficies (Dark theme)</div>
+    <div class="color-grid" style="margin-bottom:28px;">
+
       <div class="color-card">
-        <div class="color-swatch" style="background:#F9FAFB; border-bottom: 1px solid #E5E7EB;"></div>
+        <div class="color-swatch" style="background:#041329;"></div>
         <div class="color-info">
-          <div class="color-name">Blanco Suave</div>
-          <div class="color-hex">#F9FAFB</div>
-          <div class="color-rgb">RGB(249, 250, 251)</div>
-          <div class="color-role">Fondo secciones</div>
+          <div class="color-name">Deep Navy</div>
+          <div class="color-hex">#041329</div>
+          <div class="color-rgb">RGB(4, 19, 41)</div>
+          <div class="color-role">Background — canvas</div>
         </div>
       </div>
 
       <div class="color-card">
-        <div class="color-swatch" style="background:#111827;"></div>
+        <div class="color-swatch" style="background:#0d1c32;"></div>
         <div class="color-info">
-          <div class="color-name">Gris Oscuro</div>
-          <div class="color-hex">#111827</div>
-          <div class="color-rgb">RGB(17, 24, 39)</div>
-          <div class="color-role">Texto principal</div>
+          <div class="color-name">Surface Low</div>
+          <div class="color-hex">#0d1c32</div>
+          <div class="color-rgb">RGB(13, 28, 50)</div>
+          <div class="color-role">Inputs, fondos bajo</div>
         </div>
       </div>
 
       <div class="color-card">
-        <div class="color-swatch" style="background:#6B7280;"></div>
+        <div class="color-swatch" style="background:#112036;"></div>
         <div class="color-info">
-          <div class="color-name">Gris Medio</div>
-          <div class="color-hex">#6B7280</div>
-          <div class="color-rgb">RGB(107, 114, 128)</div>
-          <div class="color-role">Texto secundario</div>
+          <div class="color-name">Surface</div>
+          <div class="color-hex">#112036</div>
+          <div class="color-rgb">RGB(17, 32, 54)</div>
+          <div class="color-role">Cards, sidebars</div>
         </div>
       </div>
 
+      <div class="color-card">
+        <div class="color-swatch" style="background:#1c2a41;"></div>
+        <div class="color-info">
+          <div class="color-name">Surface High</div>
+          <div class="color-hex">#1c2a41</div>
+          <div class="color-rgb">RGB(28, 42, 65)</div>
+          <div class="color-role">Hover, modales</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#d6e3ff;"></div>
+        <div class="color-info">
+          <div class="color-name">On-Surface</div>
+          <div class="color-hex">#d6e3ff</div>
+          <div class="color-rgb">RGB(214, 227, 255)</div>
+          <div class="color-role">Texto principal dark</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background:#b6c6ed;"></div>
+        <div class="color-info">
+          <div class="color-name">Secondary Text</div>
+          <div class="color-hex">#b6c6ed</div>
+          <div class="color-rgb">RGB(182, 198, 237)</div>
+          <div class="color-role">Texto secundario dark</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="background:#041329;border:1px solid #1c2a41;border-radius:12px;padding:20px;">
+      <div style="font-size:12px;font-weight:700;color:#b6c6ed;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">Preview dark theme</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <div style="background:linear-gradient(180deg,#112036,#0d1c32);border:1px solid #1c2a41;border-radius:10px;padding:16px 20px;min-width:120px;">
+          <div style="color:#d6e3ff;font-weight:700;font-size:14px;">Card</div>
+          <div style="color:#b6c6ed;font-size:12px;">Texto secundario</div>
+        </div>
+        <button style="background:linear-gradient(180deg,#FF6B00,#E65A00);color:white;border:1px solid #ff8533;border-radius:8px;padding:10px 20px;font-weight:700;font-size:13px;box-shadow:0 0 20px rgba(255,107,0,0.3);cursor:default;">CTA Orange</button>
+        <button style="background:#1E40AF;color:white;border-radius:8px;padding:10px 20px;font-weight:700;font-size:13px;box-shadow:0 0 20px rgba(30,64,175,0.4);cursor:default;">Azul Omero</button>
+        <span style="background:rgba(56,222,187,0.15);color:#38DEBB;border:1px solid rgba(56,222,187,0.3);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;">Teal badge</span>
+      </div>
     </div>
   </div>
 
@@ -354,7 +412,7 @@
 
   <!-- Footer -->
   <div class="footer">
-    Omero Brand Guide v1.0 · Generado por el equipo de diseño · Abril 2026
+    Omero Brand Guide v1.1 · Paleta Omero + Nocturne SaaS (Stitch) · Abril 2026
     · Archivos en <code>/public/brand/</code>
   </div>
 

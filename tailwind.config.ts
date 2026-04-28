@@ -6,19 +6,77 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        primary: "#1E40AF",
-        "primary-light": "#3B82F6",
-        accent: "#F59E0B",
-        dark: "#111827",
-        medium: "#6B7280",
-        light: "#F9FAFB",
-        success: "#10B981",
+        // ── Omero Brand (CEO approved) ───────────────────────
+        primary: "#1E40AF",           // Azul Omero — alma de la marca
+        "primary-light": "#3B82F6",   // azul medio
+        "primary-deep": "#1e3a8a",    // azul oscuro
+
+        // ── Nocturne Surfaces ────────────────────────────────
+        surface: "#041329",
+        "surface-dim": "#041329",
+        "surface-bright": "#2c3951",
+        "surface-container-lowest": "#010e24",
+        "surface-container-low": "#0d1c32",
+        "surface-container": "#112036",
+        "surface-container-high": "#1c2a41",
+        "surface-container-highest": "#27354c",
+        "surface-variant": "#27354c",
+
+        // ── On-Surface (text on dark bg) ─────────────────────
+        "on-surface": "#d6e3ff",
+        "on-surface-variant": "#e2bfb0",
+        "inverse-surface": "#d6e3ff",
+        "inverse-on-surface": "#233148",
+
+        // ── Orange Accent (Nocturne CTA) ─────────────────────
+        accent: "#FF6B00",            // Electric Orange — acción
+        "accent-dim": "#E65A00",      // naranja profundo (gradiente)
+        "accent-light": "#ffb693",    // naranja suave
+        "accent-container": "#FF6B00",
+        "on-accent": "#561f00",
+        "inverse-accent": "#a04100",
+
+        // ── Teal / Tertiary (Nocturne success) ───────────────
+        teal: "#38DEBB",              // verde-turquesa — crecimiento
+        "teal-container": "#00AD8F",
+        "on-teal": "#00382d",
+
+        // ── Secondary (blue-slate) ───────────────────────────
+        secondary: "#b6c6ed",
+        "secondary-container": "#374767",
+        "on-secondary": "#20304f",
+        "on-secondary-container": "#a5b5db",
+
+        // ── Outline & Borders ────────────────────────────────
+        outline: "#a98a7d",
+        "outline-variant": "#5a4136",
+        border: "#233554",
+
+        // ── Error ────────────────────────────────────────────
+        error: "#ffb4ab",
+        "error-container": "#93000a",
+        "on-error": "#690005",
+
+        // ── Legacy aliases (compatibility) ───────────────────
+        dark: "#041329",
+        medium: "#b6c6ed",
+        light: "#0d1c32",
+        success: "#38DEBB",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
+      },
+      borderRadius: {
+        sm: "0.25rem",
+        DEFAULT: "0.5rem",
+        md: "0.75rem",
+        lg: "1rem",
+        xl: "1.5rem",
+        full: "9999px",
       },
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease-out forwards",
@@ -44,8 +102,8 @@ const config: Config = {
           "50%": { transform: "translateY(-12px)" },
         },
         pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(245, 158, 11, 0)" },
-          "50%": { boxShadow: "0 0 24px 6px rgba(245, 158, 11, 0.3)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(255, 107, 0, 0)" },
+          "50%": { boxShadow: "0 0 24px 6px rgba(255, 107, 0, 0.3)" },
         },
         shimmer: {
           "0%": { backgroundPosition: "-200% center" },
