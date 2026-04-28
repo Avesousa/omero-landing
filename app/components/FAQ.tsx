@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "¿Los precios son en pesos o dólares?",
     answer:
-      "Los precios están en USD con equivalente en pesos actualizado.",
+      "Los precios son en pesos argentinos (ARS). Sin sorpresas en dólares.",
   },
   {
     question: "¿Qué pasa si quiero cancelar?",

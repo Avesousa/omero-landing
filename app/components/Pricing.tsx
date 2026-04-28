@@ -19,7 +19,7 @@ const plans = [
   },
   {
     name: "Básico",
-    price: "$19",
+    price: "$12.900",
     priceNote: "/ mes",
     features: ["Hasta 500 productos", "2 usuarios", "Reportes básicos"],
     cta: "Empezá gratis",
@@ -27,7 +27,7 @@ const plans = [
   },
   {
     name: "Pro",
-    price: "$49",
+    price: "$29.900",
     priceNote: "/ mes",
     features: [
       "Hasta 5.000 productos",
@@ -41,7 +41,7 @@ const plans = [
   },
   {
     name: "Cadena",
-    price: "$99",
+    price: "$59.900",
     priceNote: "/ mes",
     features: [
       "Productos ilimitados",
@@ -152,7 +152,7 @@ export default function Pricing() {
           <p className="text-dark font-medium text-lg">
             💡 ¿Cuánto perdés por mes sin control?{" "}
             <span className="text-primary font-bold">
-              $19/mes es menos que una sola venta perdida.
+              $12.900/mes es menos que una sola venta perdida.
             </span>
           </p>
         </div>
