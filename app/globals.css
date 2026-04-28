@@ -17,8 +17,131 @@ body {
   background-color: #ffffff;
 }
 
-@layer utilities {
-  .gradient-hero {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-  }
+/* ─── Gradient text ────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #F59E0B 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
 }
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #93C5FD 0%, #BFDBFE 50%, #93C5FD 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ─── Animated hero background ─────────────────────────── */
+.hero-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 40%, #1d4ed8 70%, #2563eb 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+/* ─── Glow effects ──────────────────────────────────────── */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.15);
+}
+
+.glow-primary {
+  box-shadow: 0 0 30px rgba(30, 64, 175, 0.3), 0 4px 24px rgba(30, 64, 175, 0.2);
+}
+
+.glow-success {
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+/* ─── Gradient border card ──────────────────────────────── */
+.card-gradient-border {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+.card-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ─── Pricing Pro highlight ─────────────────────────────── */
+.pricing-pro {
+  background: linear-gradient(145deg, #ffffff 0%, #eff6ff 100%);
+  box-shadow: 0 8px 40px rgba(30, 64, 175, 0.18), 0 2px 8px rgba(30, 64, 175, 0.08);
+  border: 2px solid #3B82F6 !important;
+  transform: scale(1.04);
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Shimmer animation ─────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ─── Section entrance animations ──────────────────────── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Live indicator dot ────────────────────────────────── */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);  }
+}
+
+/* ─── Float animation ───────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ─── Noise texture overlay (subtle grain) ──────────────── */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ─── Scrollbar (subtle) ────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #818cf8; }

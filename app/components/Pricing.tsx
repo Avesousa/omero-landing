@@ -13,17 +13,19 @@ const plans = [
     name: "Starter",
     price: "Gratis",
     priceNote: "para siempre",
-    features: ["Hasta 50 productos", "1 usuario", "Funciones básicas"],
+    features: ["Hasta 50 productos", "1 usuario", "Funciones básicas", "Soporte por email"],
     cta: "Empezá gratis",
     highlighted: false,
+    color: "from-gray-400 to-gray-500",
   },
   {
     name: "Básico",
     price: "$12.900",
     priceNote: "/ mes",
-    features: ["Hasta 500 productos", "2 usuarios", "Reportes básicos"],
+    features: ["Hasta 500 productos", "2 usuarios", "Reportes básicos", "Soporte prioritario"],
     cta: "Empezá gratis",
     highlighted: false,
+    color: "from-blue-400 to-blue-500",
   },
   {
     name: "Pro",
@@ -34,10 +36,12 @@ const plans = [
       "5 usuarios",
       "Reportes avanzados",
       "Código de barras",
+      "Exportación CSV",
     ],
     cta: "Empezá gratis",
     highlighted: true,
     badge: "Más popular",
+    color: "from-primary to-primary-light",
   },
   {
     name: "Cadena",
@@ -48,9 +52,11 @@ const plans = [
       "Usuarios ilimitados",
       "Multi-sucursal",
       "API",
+      "Onboarding dedicado",
     ],
     cta: "Empezá gratis",
     highlighted: false,
+    color: "from-violet-500 to-purple-600",
   },
 ];
 
@@ -85,50 +91,73 @@ export default function Pricing() {
     <section
       id="pricing"
       ref={sectionRef}
-      className="bg-light py-20 px-4 sm:px-6 lg:px-8"
+      className="relative bg-gray-50 py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5"
+          style={{ background: "radial-gradient(circle, #1E40AF, transparent)" }} />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100">
+            Precios claros
+          </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-dark mb-4">
             Elegí el plan que se adapta a tu negocio
           </h2>
           <p className="text-lg text-medium">
-            Comenzá gratis. Crecé cuando quieras.
+            Comenzá gratis.{" "}
+            <strong className="text-dark">Crecé cuando quieras.</strong>
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10 items-start">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative bg-white rounded-2xl p-6 flex flex-col shadow-sm transition-shadow hover:shadow-md ${
+              className={`relative flex flex-col transition-all duration-300 ${
                 plan.highlighted
-                  ? "border-2 border-accent shadow-md"
-                  : "border border-gray-100"
+                  ? "pricing-pro rounded-2xl p-7 hover:-translate-y-2"
+                  : "bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1"
               }`}
             >
+              {/* Popular badge */}
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-dark text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap">
-                  {plan.badge}
-                </span>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <span className="bg-gradient-to-r from-primary to-primary-light text-white text-xs font-bold px-5 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                    {plan.badge} ⭐
+                  </span>
+                </div>
               )}
 
+              {/* Color stripe */}
+              <div className={`h-1 bg-gradient-to-r ${plan.color} rounded-full mb-5 ${plan.highlighted ? "h-1.5" : ""}`} />
+
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-dark mb-3">
+                <h3 className="text-xl font-extrabold text-dark mb-3">
                   {plan.name}
                 </h3>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-extrabold text-dark">
+                  <span className={`text-3xl font-extrabold ${plan.highlighted ? "text-primary" : "text-dark"}`}>
                     {plan.price}
                   </span>
                   <span className="text-medium text-sm">{plan.priceNote}</span>
                 </div>
+                {plan.highlighted && (
+                  <p className="text-success text-xs font-semibold mt-1">
+                    ✓ 14 días gratis incluidos
+                  </p>
+                )}
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
-                    <span className="text-success font-bold flex-shrink-0">✓</span>
+                  <li key={feature} className="flex items-center gap-2.5">
+                    <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${plan.highlighted ? "bg-primary text-white" : "bg-green-100 text-success"}`}>
+                      ✓
+                    </span>
                     <span className="text-dark text-sm">{feature}</span>
                   </li>
                 ))}
@@ -136,10 +165,10 @@ export default function Pricing() {
 
               <button
                 onClick={() => handleCTA(plan.name)}
-                className={`w-full py-3 rounded-xl font-semibold text-base min-h-[48px] transition-colors ${
+                className={`w-full py-3.5 rounded-xl font-bold text-base min-h-[48px] transition-all hover:scale-105 active:scale-95 ${
                   plan.highlighted
-                    ? "bg-primary text-white hover:bg-primary-light"
-                    : "bg-light text-primary border border-primary hover:bg-primary hover:text-white"
+                    ? "bg-gradient-to-r from-primary to-primary-light text-white shadow-md hover:shadow-lg glow-primary"
+                    : "bg-light text-primary border-2 border-primary hover:bg-primary hover:text-white"
                 }`}
               >
                 {plan.cta}
@@ -148,12 +177,16 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="text-center bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+        {/* Price anchor */}
+        <div className="text-center bg-gradient-to-r from-blue-50 to-amber-50 rounded-2xl p-7 border border-blue-100">
           <p className="text-dark font-medium text-lg">
             💡 ¿Cuánto perdés por mes sin control?{" "}
             <span className="text-primary font-bold">
               $12.900/mes es menos que una sola venta perdida.
             </span>
+          </p>
+          <p className="text-medium text-sm mt-2">
+            Garantía 30 días — si no quedás conforme, te devolvemos el dinero sin preguntas.
           </p>
         </div>
       </div>
