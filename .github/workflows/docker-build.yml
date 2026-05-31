@@ -12,7 +12,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -58,3 +58,21 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Create git tag
+        if: github.ref_name == 'develop' || github.ref_name == 'master'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          if [[ "${{ github.ref_name }}" == "develop" ]]; then
+            TAG="v${VERSION}-dev"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag -f "$TAG"
+            git push origin "$TAG" --force
+          else
+            TAG="v${VERSION}"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag "$TAG" || echo "Tag $TAG already exists, skipping"
+            git push origin "$TAG" || echo "Tag $TAG already pushed, skipping"
+          fi
