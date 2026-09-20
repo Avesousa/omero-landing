@@ -1,0 +1,688 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg:#041329; --s-low:#0d1c32; --s:#112036; --s-high:#1c2a41; --s-input:#27354c;
+      --tx:#d6e3ff; --tx2:#b6c6ed; --tx-mut:#8494b4;
+      --bd:#233554; --bd2:#2f4470;
+      --primary:#1E40AF; --primary-l:#3B82F6; --accent:#FF6B00; --accent-d:#E65A00; --teal:#38DEBB;
+      --lt-bg:#F0F4F8; --lt-s:#FFFFFF; --lt-s2:#F8FAFC; --lt-tx:#111827; --lt-tx2:#374151; --lt-mut:#6B7280; --lt-bd:#D1D5DB;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; font-family:"Inter", system-ui, -apple-system, sans-serif;
+      background:var(--bg); color:var(--tx); line-height:1.6; -webkit-font-smoothing:antialiased;
+    }
+    h1,h2,h3,h4,p { margin:0; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { color:#ff8a3d; }
+
+    .wrap { max-width:1200px; margin:0 auto; padding:0 40px; }
+    .eyebrow {
+      display:inline-block; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--accent); padding:6px 14px; border-radius:999px;
+      background:rgba(255,107,0,.10); border:1px solid rgba(255,107,0,.28);
+    }
+    .gradient-text {
+      background:linear-gradient(135deg,#FF6B00 0%,#ffb693 50%,#FF6B00 100%);
+      background-size:200% auto; -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; animation:shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { 0%{background-position:-200% center;} 100%{background-position:200% center;} }
+    @keyframes livePulse { 0%,100%{ box-shadow:0 0 0 0 rgba(56,222,187,.5);} 50%{ box-shadow:0 0 0 6px rgba(56,222,187,0);} }
+    @keyframes floaty { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+    .live-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); animation:livePulse 1.8s ease-in-out infinite; flex:0 0 auto; }
+
+    .btn-primary {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      background:linear-gradient(180deg,#FF6B00 0%,#E65A00 100%); color:#fff;
+      border:1px solid #ff8533; border-radius:12px; box-shadow:0 0 16px rgba(255,107,0,.25);
+      font-weight:700; font-size:15px; padding:14px 26px; cursor:pointer;
+    }
+    .btn-primary:hover { background:linear-gradient(180deg,#ff7b1a 0%,#f06400 100%); color:#fff; }
+    .btn-ghost {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      background:transparent; color:var(--tx2); border:1px solid var(--bd2); border-radius:12px;
+      font-weight:600; font-size:15px; padding:14px 26px; cursor:pointer;
+    }
+    .btn-ghost:hover { color:var(--tx); border-color:var(--primary-l); }
+
+    .badge { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; }
+    .badge-green  { background:rgba(56,222,187,.12); color:#38DEBB; border:1px solid rgba(56,222,187,.3); }
+    .badge-red    { background:rgba(239,68,68,.12);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+    .badge-yellow { background:rgba(245,158,11,.12); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+    .badge-blue   { background:rgba(59,130,246,.12); color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+
+    .o-card { background:var(--s); border:1px solid var(--bd); border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.45); }
+  </style>
+</helmet>
+
+<div style="background:var(--bg); overflow:hidden;">
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <div style="position:sticky; top:0; z-index:80; background:rgba(4,19,41,.82); backdrop-filter:blur(10px); border-bottom:1px solid var(--bd);">
+    <div class="wrap" style="height:68px; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="10" fill="#1E40AF"></rect>
+          <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"></circle>
+          <polygon points="24,7 29,14 19,14" fill="white"></polygon>
+        </svg>
+        <span style="font-size:22px; font-weight:800; letter-spacing:-.03em; color:#fff;">omero</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:30px;">
+        <span style="font-size:14px; font-weight:500; color:var(--tx2);">Producto</span>
+        <span style="font-size:14px; font-weight:500; color:var(--tx2);">Componentes</span>
+        <span style="font-size:14px; font-weight:500; color:var(--tx2);">Precios</span>
+        <span style="font-size:14px; font-weight:500; color:var(--tx2);">FAQ</span>
+        <button class="btn-ghost" style="padding:9px 16px; font-size:13px;">Ingresar</button>
+        <button class="btn-primary" style="padding:10px 20px; font-size:14px;">Probar gratis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ HERO (claro) ══════════ -->
+  <div style="background:linear-gradient(180deg,#FFFFFF 0%,#F0F4F8 100%); color:var(--lt-tx); position:relative;">
+    <div style="position:absolute; top:-120px; right:-80px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,rgba(59,130,246,.16),transparent 70%); pointer-events:none;"></div>
+    <div style="position:absolute; bottom:-140px; left:-100px; width:460px; height:460px; border-radius:50%; background:radial-gradient(circle,rgba(255,107,0,.12),transparent 70%); pointer-events:none;"></div>
+    <div class="wrap" style="position:relative; padding-top:88px; padding-bottom:96px; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;">
+
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--lt-bd); border-radius:999px; padding:7px 14px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:26px;">
+          <span class="live-dot"></span>
+          <span style="color:#FF6B00; font-weight:800; font-size:13px;">★★★★★</span>
+          <span style="color:var(--lt-tx2); font-size:13px; font-weight:600;">+50 comercios de Zona Oeste lo usan a diario</span>
+        </div>
+        <h1 style="font-size:56px; line-height:1.08; font-weight:800; letter-spacing:-.03em; color:var(--lt-tx); margin-bottom:22px; text-wrap:balance;">
+          El sistema de gestión que tu comercio ya sabe usar.
+          <span class="gradient-text">Omero.</span>
+        </h1>
+        <p style="font-size:19px; color:var(--lt-tx2); max-width:520px; margin-bottom:34px;">
+          Stock, márgenes y precios bajo control desde la caja o el celular.
+          Cargás con lector de código de barras, ves tu ganancia real al instante
+          e imprimís etiquetas actualizadas. <strong style="color:var(--lt-tx);">Sin planillas.</strong>
+        </p>
+        <div style="display:flex; gap:14px; margin-bottom:30px;">
+          <button class="btn-primary" style="font-size:16px; padding:16px 30px;">Empezá gratis — 14 días</button>
+          <button class="btn-ghost" style="font-size:16px; padding:16px 30px; color:var(--lt-tx2); border-color:var(--lt-bd);">Ver demo del POS →</button>
+        </div>
+        <div style="display:flex; gap:26px;">
+          <span style="display:flex; align-items:center; gap:7px; color:var(--lt-mut); font-size:14px;"><span style="color:#0d9488; font-weight:800;">✓</span> Sin tarjeta</span>
+          <span style="display:flex; align-items:center; gap:7px; color:var(--lt-mut); font-size:14px;"><span style="color:#0d9488; font-weight:800;">✓</span> Cancelás cuando quieras</span>
+          <span style="display:flex; align-items:center; gap:7px; color:var(--lt-mut); font-size:14px;"><span style="color:#0d9488; font-weight:800;">✓</span> Soporte en español</span>
+        </div>
+      </div>
+
+      <!-- App mockup: Dashboard real (Nocturne) -->
+      <div style="position:relative;">
+        <div style="position:absolute; top:-22px; left:-26px; z-index:3; background:#fff; border:1px solid var(--lt-bd); border-radius:14px; padding:12px 16px; box-shadow:0 12px 32px rgba(4,19,41,.18); display:flex; align-items:center; gap:12px; animation:floaty 5s ease-in-out infinite;">
+          <span style="font-size:22px;">📦</span>
+          <div>
+            <p style="font-size:11px; font-weight:800; color:#dc2626;">⚠ Stock bajo</p>
+            <p style="font-size:12px; color:var(--lt-tx2);">Harina 000 1kg — quedan 3 u.</p>
+          </div>
+        </div>
+        <div style="position:absolute; bottom:-20px; right:-24px; z-index:3; background:#fff; border:1px solid var(--lt-bd); border-radius:14px; padding:12px 16px; box-shadow:0 12px 32px rgba(4,19,41,.18); display:flex; align-items:center; gap:12px; animation:floaty 6s ease-in-out infinite 1s;">
+          <span style="font-size:22px;">💸</span>
+          <div>
+            <p style="font-size:12px; font-weight:800; color:#0d9488;">+$18.400 hoy</p>
+            <p style="font-size:11px; color:var(--lt-mut);">Ventas en tiempo real</p>
+          </div>
+        </div>
+
+        <div style="background:var(--s); border:1px solid var(--bd); border-radius:18px; padding:16px; box-shadow:0 24px 60px rgba(4,19,41,.35);">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 6px 12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="width:10px; height:10px; border-radius:50%; background:#f87171;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#fbbf24;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#4ade80;"></span>
+              <span style="color:var(--tx-mut); font-size:12px; margin-left:6px;">Omero — Dashboard</span>
+            </div>
+            <span style="display:flex; align-items:center; gap:6px; color:var(--teal); font-size:12px;"><span class="live-dot"></span> En vivo</span>
+          </div>
+
+          <!-- TodayStatsCards -->
+          <div style="background:rgba(0,0,0,.3); border:1px solid #374151; border-radius:12px; padding:12px;">
+            <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;">
+              <div style="background:linear-gradient(135deg,rgba(168,85,247,.20),rgba(219,39,119,.20)); border:1px solid rgba(168,85,247,.30); border-radius:10px; padding:11px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                  <span style="color:#d8b4fe; font-size:11px; font-weight:600;">Total Ventas</span><span>💰</span>
+                </div>
+                <p style="font-size:16px; font-weight:800; color:#fff;">$248.900 <span style="color:#4ade80; font-size:10px; font-weight:600;">↑ 12,4%</span></p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(59,130,246,.20),rgba(8,145,178,.20)); border:1px solid rgba(59,130,246,.30); border-radius:10px; padding:11px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                  <span style="color:#93c5fd; font-size:11px; font-weight:600;">Transacciones</span><span>📈</span>
+                </div>
+                <p style="font-size:18px; font-weight:800; color:#fff;">64 <span style="color:#4ade80; font-size:10px; font-weight:600;">↑ 8,0%</span></p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(34,197,94,.20),rgba(5,150,105,.20)); border:1px solid rgba(34,197,94,.30); border-radius:10px; padding:11px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                  <span style="color:#86efac; font-size:11px; font-weight:600;">% Margen</span><span>📊</span>
+                </div>
+                <p style="font-size:18px; font-weight:800; color:#fff;">38,2% <span style="color:#4ade80; font-size:10px; font-weight:600;">↑ 3,1%</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- mini tabla -->
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:7px;">
+            <div style="display:flex; justify-content:space-between; padding:2px 10px;">
+              <span style="color:var(--tx-mut); font-size:10px; letter-spacing:.08em; text-transform:uppercase;">Producto</span>
+              <span style="color:var(--tx-mut); font-size:10px; letter-spacing:.08em; text-transform:uppercase;">Stock · Margen</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--s-high); border-radius:8px; padding:10px 12px;">
+              <span style="display:flex; align-items:center; gap:8px; color:#fff; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:#38DEBB;"></span> Coca-Cola 500ml</span>
+              <span style="color:var(--tx2); font-size:12px;">48 u. · <strong style="color:#38DEBB;">32%</strong></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(239,68,68,.10); border:1px solid rgba(239,68,68,.3); border-radius:8px; padding:10px 12px;">
+              <span style="display:flex; align-items:center; gap:8px; color:#fff; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:#f87171;"></span> Harina 000 1kg</span>
+              <span style="color:var(--tx2); font-size:12px;">3 u. · <strong style="color:#f87171;">18%</strong></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--s-high); border-radius:8px; padding:10px 12px;">
+              <span style="display:flex; align-items:center; gap:8px; color:#fff; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:#38DEBB;"></span> Detergente 500ml</span>
+              <span style="color:var(--tx2); font-size:12px;">27 u. · <strong style="color:#38DEBB;">41%</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ LOGOS / PROOF STRIP ══════════ -->
+  <div style="background:var(--s-low); border-top:1px solid var(--bd); border-bottom:1px solid var(--bd);">
+    <div class="wrap" style="padding:26px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <span style="color:var(--tx-mut); font-size:13px; font-weight:600;">Comercios que ya dejaron las planillas:</span>
+      <div style="display:flex; gap:34px; align-items:center; color:var(--tx2); font-weight:700; font-size:15px; opacity:.75;">
+        <span>Almacén El Sol</span>
+        <span>Kiosco La Esperanza</span>
+        <span>Fiambrería Don Pedro</span>
+        <span>Ferretería Haedo</span>
+        <span>Dietética Natural</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SHOWCASE (oscuro) — tabs clickeables ══════════ -->
+  <div style="background:var(--bg); padding:88px 0 96px; position:relative;">
+    <div style="position:absolute; top:60px; left:50%; transform:translateX(-50%); width:800px; height:400px; background:radial-gradient(ellipse,rgba(30,64,175,.18),transparent 70%); pointer-events:none;"></div>
+    <div class="wrap" style="position:relative;">
+      <div style="text-align:center; margin-bottom:40px;">
+        <span class="eyebrow">Mirá Omero por dentro</span>
+        <h2 style="font-size:40px; font-weight:800; letter-spacing:-.02em; color:#fff; margin:18px 0 14px; text-wrap:balance;">
+          Los mismos componentes que vas a usar todos los días
+        </h2>
+        <p style="font-size:18px; color:var(--tx2); max-width:620px; margin:0 auto;">
+          No son capturas de marketing. Es la interfaz real: el POS del cajero,
+          el dashboard del dueño y el panel de administración.
+        </p>
+      </div>
+
+      <!-- Tab bar -->
+      <div style="display:flex; justify-content:center; gap:10px; margin-bottom:28px;">
+        <button onClick="{{ setPos }}" style="{{ tabPos }}">🛒 Punto de Venta</button>
+        <button onClick="{{ setDash }}" style="{{ tabDash }}">📊 Dashboard</button>
+        <button onClick="{{ setAdmin }}" style="{{ tabAdmin }}">⚙️ Administración</button>
+      </div>
+
+      <div class="o-card" style="padding:28px; background:var(--s-low);">
+
+        <!-- ── POS ── -->
+        <sc-if value="{{ isPos }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:1.35fr 1fr; gap:24px;">
+          <div>
+            <div style="text-align:center; margin-bottom:14px;">
+              <div style="font-size:17px; font-weight:800; color:#facc15;">INGRESE CÓDIGO DE PRODUCTO</div>
+              <div style="font-size:13px; color:#fde68a;">Escaneá o tipeá los 3 dígitos · 000 = precio libre</div>
+            </div>
+            <div style="background:#000; border:4px solid #eab308; padding:34px 20px;">
+              <div style="text-align:center;">
+                <div style="font-size:60px; font-weight:800; color:#facc15; line-height:1; margin-bottom:14px;">247</div>
+                <div style="font-size:16px; color:#d1d5db;">Aceite Girasol 1,5L — Natura</div>
+              </div>
+            </div>
+            <div style="text-align:center; margin-top:14px; color:#d1d5db; font-size:13px;">Use el teclado numérico para ingresar el código</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="background:#000; border:1px solid #4b5563; padding:14px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                <span style="width:30px; height:30px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">1</span>
+                <span style="color:#4ade80; font-weight:800; font-size:17px;">$3.480</span>
+              </div>
+              <div style="color:#fff; font-weight:500; font-size:13px; margin-bottom:6px;">Aceite Girasol 1,5L — Natura</div>
+              <div style="display:flex; justify-content:space-between; font-size:12px;">
+                <span style="color:#9ca3af;">Cantidad: 2</span><span style="color:#facc15;">$1.740 c/u</span>
+              </div>
+            </div>
+            <div style="background:#000; border:1px solid #4b5563; padding:14px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                <span style="width:30px; height:30px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">2</span>
+                <span style="color:#4ade80; font-weight:800; font-size:17px;">$2.100</span>
+              </div>
+              <div style="color:#fff; font-weight:500; font-size:13px; margin-bottom:6px;">Yerba Playadito 1kg</div>
+              <div style="display:flex; justify-content:space-between; font-size:12px;">
+                <span style="color:#9ca3af;">Cantidad: 1</span><span style="color:#facc15;">$2.100 c/u</span>
+              </div>
+            </div>
+            <div style="background:#000; border:2px solid #eab308; padding:12px; text-align:center;">
+              <div style="font-size:12px; color:#d1d5db; margin-bottom:2px;">TOTAL</div>
+              <div style="font-size:24px; font-weight:800; color:#facc15;">$5.580</div>
+              <div style="font-size:11px; color:#9ca3af; margin-top:2px;">2 productos</div>
+            </div>
+            <button style="background:#16a34a; border:2px solid #4ade80; color:#fff; font-weight:800; padding:13px; font-size:15px; cursor:pointer;">💳 FINALIZAR VENTA — ENTER</button>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ── DASHBOARD ── -->
+        <sc-if value="{{ isDash }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="background:rgba(0,0,0,.3); border:1px solid #374151; border-radius:12px; padding:16px; margin-bottom:20px;">
+            <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px;">
+              <div style="background:linear-gradient(135deg,rgba(168,85,247,.20),rgba(219,39,119,.20)); border:1px solid rgba(168,85,247,.30); border-radius:10px; padding:13px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#d8b4fe; font-size:11px; font-weight:600;">Total Ventas</span><span>💰</span></div>
+                <p style="font-size:16px; font-weight:800; color:#fff;">$248.900</p>
+                <p style="color:#4ade80; font-size:10px; font-weight:600;">↑ 12,4%</p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(59,130,246,.20),rgba(8,145,178,.20)); border:1px solid rgba(59,130,246,.30); border-radius:10px; padding:13px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#93c5fd; font-size:11px; font-weight:600;">Transacciones</span><span>📈</span></div>
+                <p style="font-size:18px; font-weight:800; color:#fff;">64</p>
+                <p style="color:#4ade80; font-size:10px; font-weight:600;">↑ 8,0%</p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(34,197,94,.20),rgba(5,150,105,.20)); border:1px solid rgba(34,197,94,.30); border-radius:10px; padding:13px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#86efac; font-size:11px; font-weight:600;">Ganancias</span><span>💚</span></div>
+                <p style="font-size:16px; font-weight:800; color:#fff;">$95.100</p>
+                <p style="color:#4ade80; font-size:10px; font-weight:600;">↑ 9,7%</p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(168,85,247,.20),rgba(219,39,119,.20)); border:1px solid rgba(168,85,247,.30); border-radius:10px; padding:13px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#d8b4fe; font-size:11px; font-weight:600;">% Margen</span><span>📊</span></div>
+                <p style="font-size:18px; font-weight:800; color:#fff;">38,2%</p>
+                <p style="color:#4ade80; font-size:10px; font-weight:600;">↑ 3,1%</p>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(59,130,246,.20),rgba(8,145,178,.20)); border:1px solid rgba(59,130,246,.30); border-radius:10px; padding:13px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#93c5fd; font-size:11px; font-weight:600;">Venta Neta</span><span>💰</span></div>
+                <p style="font-size:16px; font-weight:800; color:#fff;">$231.700</p>
+                <p style="color:#f87171; font-size:10px; font-weight:600;">↓ 1,2%</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:20px;">
+            <div class="o-card" style="padding:18px; background:var(--s);">
+              <p style="font-size:14px; font-weight:700; color:#fff; margin-bottom:16px;">Ventas por día — últimos 7 días</p>
+              <div style="display:flex; align-items:flex-end; gap:14px; height:150px;">
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:62%; background:linear-gradient(180deg,#3B82F6,#1E40AF); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Lun</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:48%; background:linear-gradient(180deg,#3B82F6,#1E40AF); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Mar</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:71%; background:linear-gradient(180deg,#3B82F6,#1E40AF); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Mié</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:55%; background:linear-gradient(180deg,#3B82F6,#1E40AF); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Jue</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:88%; background:linear-gradient(180deg,#FF6B00,#E65A00); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Vie</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:100%; background:linear-gradient(180deg,#FF6B00,#E65A00); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Sáb</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;"><div style="width:100%; height:40%; background:linear-gradient(180deg,#3B82F6,#1E40AF); border-radius:6px 6px 0 0;"></div><span style="font-size:11px; color:var(--tx-mut);">Dom</span></div>
+              </div>
+            </div>
+            <div class="o-card" style="padding:18px; background:var(--s);">
+              <p style="font-size:14px; font-weight:700; color:#fff; margin-bottom:14px;">Top rubros por margen</p>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div><div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tx2); margin-bottom:4px;"><span>Bebidas</span><span style="color:#38DEBB; font-weight:700;">41%</span></div><div style="height:7px; background:var(--s-high); border-radius:4px;"><div style="width:82%; height:100%; background:#38DEBB; border-radius:4px;"></div></div></div>
+                <div><div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tx2); margin-bottom:4px;"><span>Limpieza</span><span style="color:#38DEBB; font-weight:700;">37%</span></div><div style="height:7px; background:var(--s-high); border-radius:4px;"><div style="width:74%; height:100%; background:#38DEBB; border-radius:4px;"></div></div></div>
+                <div><div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tx2); margin-bottom:4px;"><span>Almacén</span><span style="color:#fbbf24; font-weight:700;">24%</span></div><div style="height:7px; background:var(--s-high); border-radius:4px;"><div style="width:48%; height:100%; background:#fbbf24; border-radius:4px;"></div></div></div>
+                <div><div style="display:flex; justify-content:space-between; font-size:12px; color:var(--tx2); margin-bottom:4px;"><span>Fiambres</span><span style="color:#f87171; font-weight:700;">17%</span></div><div style="height:7px; background:var(--s-high); border-radius:4px;"><div style="width:34%; height:100%; background:#f87171; border-radius:4px;"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ── ADMIN ── -->
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div style="display:flex; gap:8px;">
+              <span class="badge badge-blue">Todos · 1.284</span>
+              <span class="badge badge-yellow">Stock bajo · 12</span>
+              <span class="badge badge-red">Sin stock · 3</span>
+            </div>
+            <button class="btn-primary" style="padding:10px 18px; font-size:13px;">+ Nuevo producto</button>
+          </div>
+          <div class="o-card" style="overflow:hidden; background:var(--s);">
+            <div style="display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 0.5fr; gap:0; background:rgba(31,41,55,.5); padding:14px 18px; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#d1d5db;">
+              <span>Producto</span><span>Costo</span><span>Precio</span><span>Stock</span><span></span>
+            </div>
+            <div style="display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 0.5fr; gap:0; padding:14px 18px; border-top:1px solid var(--bd); align-items:center;">
+              <div><p style="color:#fff; font-size:13px; font-weight:600;">Coca-Cola 500ml</p><p style="color:var(--tx-mut); font-size:11px;">Cód. 012 · Bebidas</p></div>
+              <span style="color:var(--tx2); font-size:13px;">$820</span>
+              <span style="color:#fff; font-size:13px; font-weight:600;">$1.200</span>
+              <span style="color:#fff; font-size:13px;">48 u.</span>
+              <span style="color:var(--tx-mut); font-size:18px; text-align:right;">⋮</span>
+            </div>
+            <div style="display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 0.5fr; gap:0; padding:14px 18px; border-top:1px solid var(--bd); align-items:center; background:rgba(239,68,68,.10);">
+              <div><p style="color:#fff; font-size:13px; font-weight:600;">Harina 000 1kg</p><p style="color:var(--tx-mut); font-size:11px;">Cód. 247 · Almacén</p></div>
+              <span style="color:var(--tx2); font-size:13px;">$690</span>
+              <span style="color:#fff; font-size:13px; font-weight:600;">$840</span>
+              <div><span style="color:#f87171; font-size:13px; font-weight:700;">3 u.</span><p style="color:#f87171; font-size:11px;">Mín: 10</p></div>
+              <span style="color:var(--tx-mut); font-size:18px; text-align:right;">⋮</span>
+            </div>
+            <div style="display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 0.5fr; gap:0; padding:14px 18px; border-top:1px solid var(--bd); align-items:center; background:rgba(255,107,0,.10);">
+              <div><p style="color:#fff; font-size:13px; font-weight:600;">Detergente Magistral 500ml</p><p style="color:var(--tx-mut); font-size:11px;">Cód. 089 · Limpieza</p></div>
+              <span style="color:var(--tx2); font-size:13px;">$1.150</span>
+              <span style="color:#fff; font-size:13px; font-weight:600;">$1.950</span>
+              <span style="color:#fff; font-size:13px;">27 u.</span>
+              <div style="position:relative; text-align:right;">
+                <span style="color:#fff; font-size:18px;">⋮</span>
+                <div style="position:absolute; right:0; top:24px; width:190px; background:#111827; border:1px solid #374151; border-radius:8px; box-shadow:0 12px 28px rgba(0,0,0,.5); padding:5px; text-align:left; z-index:5;">
+                  <div style="padding:8px 12px; font-size:13px; color:#e5e7eb;">✏️ Editar</div>
+                  <div style="padding:8px 12px; font-size:13px; color:#818cf8;">🏷️ Imprimir etiqueta</div>
+                  <div style="padding:8px 12px; font-size:13px; color:#4ade80;">📦 Ajustar stock</div>
+                  <div style="padding:8px 12px; font-size:13px; color:#f87171;">🗑 Eliminar</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr 0.5fr; gap:0; padding:14px 18px; border-top:1px solid var(--bd); align-items:center;">
+              <div><p style="color:#fff; font-size:13px; font-weight:600;">Yerba Playadito 1kg</p><p style="color:var(--tx-mut); font-size:11px;">Cód. 156 · Almacén</p></div>
+              <span style="color:var(--tx2); font-size:13px;">$1.560</span>
+              <span style="color:#fff; font-size:13px; font-weight:600;">$2.100</span>
+              <span style="color:#fff; font-size:13px;">31 u.</span>
+              <span style="color:var(--tx-mut); font-size:18px; text-align:right;">⋮</span>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ BENEFICIOS (oscuro glass) ══════════ -->
+  <div style="background:linear-gradient(180deg,#041329 0%,#0a1a3a 100%); padding:88px 0;">
+    <div class="wrap">
+      <div style="text-align:center; margin-bottom:44px;">
+        <span class="eyebrow" style="color:var(--primary-l); background:rgba(59,130,246,.10); border-color:rgba(59,130,246,.28);">Funcionalidades</span>
+        <h2 style="font-size:40px; font-weight:800; letter-spacing:-.02em; color:#fff; margin:18px 0 12px;">Todo lo que tu negocio necesita</h2>
+        <p style="font-size:18px; color:var(--tx2);">Sin funciones de más. Sin curva de aprendizaje. Solo lo que usás todos los días.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px;">
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#3B82F6,#1E40AF); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">📦</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Control de stock real</h3>
+          <p style="color:var(--tx2); font-size:14px;">Sabés qué tenés sin contar físicamente. Alerta automática cuando un producto baja del mínimo.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#38DEBB,#0d9488); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">💰</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Márgenes automáticos</h3>
+          <p style="color:var(--tx2); font-size:14px;">Cargás el costo y Omero calcula el precio y tu ganancia real. Nunca más vendés a pérdida sin darte cuenta.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#FF6B00,#E65A00); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">🏷️</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Etiquetas de góndola</h3>
+          <p style="color:var(--tx2); font-size:14px;">Cambiás un precio y reimprimís todos los carteles afectados en minutos, con el formato de tu comercio.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#a855f7,#7c3aed); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">💻</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">App de escritorio + web</h3>
+          <p style="color:var(--tx2); font-size:14px;">El POS de escritorio funciona sin internet y sincroniza al reconectar. El dashboard lo abrís desde el celular.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#f43f5e,#e11d48); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">📥</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Importación por CSV</h3>
+          <p style="color:var(--tx2); font-size:14px;">Subís todo tu catálogo desde una planilla y Omero detecta errores antes de cargar. Sin re-tipear nada.</p>
+        </div>
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:26px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#0ea5e9,#0284c7); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px;">💳</div>
+          <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Cobro con Mercado Pago</h3>
+          <p style="color:var(--tx2); font-size:14px;">Pago mixto efectivo + QR en la misma venta, con cálculo de vuelto y cierre de caja diario.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:36px;">
+        <div style="text-align:center; padding:24px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px;">
+          <p style="font-size:34px; font-weight:800;" class="gradient-text">+50</p><p style="color:var(--tx2); font-size:13px;">comercios en Zona Oeste</p>
+        </div>
+        <div style="text-align:center; padding:24px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px;">
+          <p style="font-size:34px; font-weight:800;" class="gradient-text">10 min</p><p style="color:var(--tx2); font-size:13px;">de onboarding promedio</p>
+        </div>
+        <div style="text-align:center; padding:24px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px;">
+          <p style="font-size:34px; font-weight:800;" class="gradient-text">$0</p><p style="color:var(--tx2); font-size:13px;">los primeros 14 días</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ PRICING (claro) — toggle mensual/anual ══════════ -->
+  <div style="background:linear-gradient(180deg,#F0F4F8 0%,#FFFFFF 100%); color:var(--lt-tx); padding:88px 0;">
+    <div class="wrap">
+      <div style="text-align:center; margin-bottom:30px;">
+        <span class="eyebrow" style="color:#1E40AF; background:rgba(30,64,175,.08); border-color:rgba(30,64,175,.2);">Precios claros</span>
+        <h2 style="font-size:40px; font-weight:800; letter-spacing:-.02em; color:var(--lt-tx); margin:18px 0 12px;">Elegí el plan que se adapta a tu comercio</h2>
+        <p style="font-size:18px; color:var(--lt-tx2);">Empezá gratis. Crecé cuando quieras. Precios en pesos, sin sorpresas en dólares.</p>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:34px;">
+        <span style="font-size:14px; font-weight:600; color:{{ mColor }};">Mensual</span>
+        <button onClick="{{ toggleAnnual }}" style="{{ switchTrack }}">
+          <span style="{{ switchKnob }}"></span>
+        </button>
+        <span style="font-size:14px; font-weight:600; color:{{ aColor }};">Anual <span style="color:#0d9488; font-weight:700;">−2 meses</span></span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; align-items:start;">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="4">
+          <div style="{{ p.cardStyle }}">
+            <sc-if value="{{ p.popular }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:linear-gradient(90deg,#1E40AF,#3B82F6); color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:999px; white-space:nowrap;">MÁS ELEGIDO ⭐</div>
+            </sc-if>
+            <div style="height:5px; border-radius:999px; margin-bottom:18px; background:{{ p.stripe }};"></div>
+            <h3 style="font-size:19px; font-weight:800; color:var(--lt-tx); margin-bottom:10px;">{{ p.name }}</h3>
+            <div style="display:flex; align-items:baseline; gap:5px; margin-bottom:4px;">
+              <span style="font-size:30px; font-weight:800; color:{{ p.priceColor }};">{{ p.price }}</span>
+              <span style="font-size:13px; color:var(--lt-mut);">{{ p.period }}</span>
+            </div>
+            <p style="font-size:12px; color:#0d9488; font-weight:700; min-height:18px;">{{ p.note }}</p>
+            <div style="height:1px; background:var(--lt-bd); margin:16px 0;"></div>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+              <sc-for list="{{ p.features }}" as="f" hint-placeholder-count="4">
+                <div style="display:flex; align-items:center; gap:9px; font-size:13px; color:var(--lt-tx2);">
+                  <span style="{{ f.checkStyle }}">✓</span> {{ f.text }}
+                </div>
+              </sc-for>
+            </div>
+            <button style="{{ p.btnStyle }}">{{ p.cta }}</button>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:26px; text-align:center; background:linear-gradient(90deg,#EFF6FF,#FFF7ED); border:1px solid #DBEAFE; border-radius:16px; padding:24px;">
+        <p style="font-size:17px; color:var(--lt-tx); font-weight:600;">💡 ¿Cuánto perdés por mes sin control de márgenes? <span style="color:#1E40AF; font-weight:800;">El plan Pro cuesta menos que una sola venta a pérdida.</span></p>
+        <p style="font-size:13px; color:var(--lt-mut); margin-top:6px;">Garantía de 30 días. Si no te sirve, te devolvemos el dinero sin preguntas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FAQ (claro) — acordeón ══════════ -->
+  <div style="background:#FFFFFF; color:var(--lt-tx); padding:80px 0;">
+    <div style="max-width:760px; margin:0 auto; padding:0 40px;">
+      <h2 style="font-size:36px; font-weight:800; letter-spacing:-.02em; text-align:center; color:var(--lt-tx); margin-bottom:36px;">Preguntas frecuentes</h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="5">
+          <div style="border:1px solid var(--lt-bd); border-radius:12px; overflow:hidden; background:#fff;">
+            <button onClick="{{ q.toggle }}" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; background:#fff; border:0; cursor:pointer; text-align:left;">
+              <span style="font-size:15px; font-weight:600; color:var(--lt-tx);">{{ q.question }}</span>
+              <span style="font-size:22px; font-weight:300; color:#1E40AF; transform:{{ q.rot }}; transition:transform .2s;">+</span>
+            </button>
+            <sc-if value="{{ q.open }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:2px 22px 20px; border-top:1px solid #EEF2F6;">
+                <p style="font-size:14px; color:var(--lt-tx2); padding-top:12px;">{{ q.answer }}</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CTA FINAL ══════════ -->
+  <div style="background:linear-gradient(135deg,#1e3a8a 0%,#1E40AF 50%,#2563eb 100%); padding:84px 0; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-80px; right:-60px; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle,rgba(255,107,0,.22),transparent 70%);"></div>
+    <div style="max-width:680px; margin:0 auto; padding:0 40px; position:relative; text-align:center;">
+      <div style="display:inline-flex; align-items:center; gap:9px; background:rgba(255,107,0,.18); border:1px solid rgba(255,107,0,.4); color:#ffb693; font-size:13px; font-weight:700; padding:7px 16px; border-radius:999px; margin-bottom:24px;">
+        <span class="live-dot" style="background:#FF6B00;"></span> Plazas limitadas para onboarding personalizado este mes
+      </div>
+      <h2 style="font-size:44px; font-weight:800; letter-spacing:-.02em; color:#fff; margin-bottom:14px; line-height:1.1;">Tu negocio no puede <span class="gradient-text">esperar más.</span></h2>
+      <p style="font-size:19px; color:#bfdbfe; margin-bottom:34px;">Empezá hoy con 14 días gratis — sin riesgos, sin tarjeta, sin complicaciones.</p>
+
+      <div style="background:#fff; border-radius:18px; padding:28px; box-shadow:0 24px 60px rgba(4,19,41,.4); text-align:left;">
+        <h3 style="font-size:18px; font-weight:800; color:var(--lt-tx); text-align:center; margin-bottom:20px;">Creá tu cuenta en 60 segundos</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:14px;">
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--lt-mut); margin-bottom:6px;">Nombre</label>
+            <div style="border:2px solid #E5E7EB; border-radius:10px; padding:11px 14px; font-size:14px; color:var(--lt-mut);">Juan</div>
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--lt-mut); margin-bottom:6px;">WhatsApp</label>
+            <div style="border:2px solid #E5E7EB; border-radius:10px; padding:11px 14px; font-size:14px; color:var(--lt-mut);">+54 9 11 …</div>
+          </div>
+          <div>
+            <label style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--lt-mut); margin-bottom:6px;">Rubro</label>
+            <div style="border:2px solid #E5E7EB; border-radius:10px; padding:11px 14px; font-size:14px; color:var(--lt-mut);">Kiosco ▾</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%; font-size:16px; padding:16px;">Quiero empezar — es gratis →</button>
+        <div style="display:flex; justify-content:center; gap:22px; margin-top:14px;">
+          <span style="font-size:12px; color:var(--lt-mut);"><span style="color:#0d9488; font-weight:800;">✓</span> Sin tarjeta</span>
+          <span style="font-size:12px; color:var(--lt-mut);"><span style="color:#0d9488; font-weight:800;">✓</span> 14 días gratis</span>
+          <span style="font-size:12px; color:var(--lt-mut);"><span style="color:#0d9488; font-weight:800;">✓</span> Cancelás cuando quieras</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <div style="background:#010e24; padding:44px 0;">
+    <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="26" height="26" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="10" fill="#1E40AF"></rect>
+          <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"></circle>
+          <polygon points="24,7 29,14 19,14" fill="white"></polygon>
+        </svg>
+        <div>
+          <p style="font-size:16px; font-weight:800; color:#fff;">omero</p>
+          <p style="font-size:12px; color:var(--tx-mut);">Gestión simple para comercios argentinos</p>
+        </div>
+      </div>
+      <div style="display:flex; gap:26px; color:var(--tx-mut); font-size:13px;">
+        <span>Producto</span><span>Precios</span><span>Contacto</span><span>Términos</span><span>Privacidad</span>
+      </div>
+    </div>
+    <div class="wrap" style="border-top:1px solid var(--bd); margin-top:26px; padding-top:20px;">
+      <p style="font-size:12px; color:var(--tx-mut);">© 2026 Omero. Todos los derechos reservados. · Hecho en Zona Oeste, Buenos Aires.</p>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":5150}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: "pos", faq: 0, annual: false };
+  }
+
+  tabStyle(active) {
+    const base = "display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:1px solid ";
+    return active
+      ? base + "#ff8533;background:linear-gradient(180deg,#FF6B00,#E65A00);color:#fff;box-shadow:0 0 16px rgba(255,107,0,.25);"
+      : base + "var(--bd2);background:var(--s-high);color:var(--tx2);";
+  }
+
+  renderVals() {
+    const s = this.state;
+    const annual = s.annual;
+
+    const setTab = (t) => () => this.setState({ tab: t });
+
+    const faqData = [
+      { question: "¿Necesito tarjeta de crédito para la prueba?", answer: "No. Los 14 días son 100% gratis y sin tarjeta. Al terminar, elegís si seguís con un plan pago o te quedás en el plan Starter gratuito." },
+      { question: "¿Puedo importar los productos que ya tengo cargados?", answer: "Sí. Importás por CSV desde tu planilla actual o escaneás con lector de código de barras. Omero valida los datos y te avisa si hay filas con errores antes de cargar." },
+      { question: "¿El POS funciona sin internet?", answer: "La app de escritorio funciona offline: seguís vendiendo aunque se corte la conexión y todo se sincroniza automáticamente al volver. El dashboard y el panel admin necesitan conexión." },
+      { question: "¿Los precios están en pesos?", answer: "Sí, todos los planes se facturan en pesos argentinos (ARS). Sin ajustes atados al dólar." },
+      { question: "¿Qué pasa si quiero cancelar?", answer: "Cancelás cuando quieras desde el panel, sin llamados ni penalidades. Exportás tus datos en CSV en cualquier momento." },
+    ];
+    const faqs = faqData.map((f, i) => ({
+      question: f.question,
+      answer: f.answer,
+      open: s.faq === i,
+      rot: s.faq === i ? "rotate(45deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ faq: s.faq === i ? null : i }),
+    }));
+
+    const mkPlan = (name, m, a, period, features, opts) => {
+      opts = opts || {};
+      const popular = !!opts.popular;
+      const price = opts.free ? "Gratis" : (annual ? a : m);
+      const per = opts.free ? "para siempre" : (annual ? "/ año" : "/ mes");
+      const note = opts.free ? "" : (annual ? "Equivale a 10 meses" : "14 días gratis incluidos");
+      const checkStyle = popular
+        ? "flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#1E40AF;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;"
+        : "flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#D1FAE5;color:#059669;font-size:10px;display:flex;align-items:center;justify-content:center;";
+      return {
+        name, price, period: per, note, popular,
+        features: features.map((t) => ({ text: t, checkStyle })),
+        stripe: opts.stripe,
+        priceColor: popular ? "#1E40AF" : "var(--lt-tx)",
+        cardStyle: popular
+          ? "position:relative;display:flex;flex-direction:column;background:#fff;border:2px solid #FF6B00;border-radius:16px;padding:26px 22px;box-shadow:0 12px 40px rgba(255,107,0,.16);"
+          : "position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:24px 22px;box-shadow:0 1px 3px rgba(0,0,0,.06);",
+        checkStyle: popular
+          ? "flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#1E40AF;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;"
+          : "flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#D1FAE5;color:#059669;font-size:10px;display:flex;align-items:center;justify-content:center;",
+        btnStyle: popular
+          ? "width:100%;padding:13px;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;border:1px solid #ff8533;background:linear-gradient(180deg,#FF6B00,#E65A00);color:#fff;box-shadow:0 0 16px rgba(255,107,0,.25);"
+          : "width:100%;padding:13px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;border:2px solid #1E40AF;background:#fff;color:#1E40AF;",
+        cta: opts.free ? "Empezá gratis" : "Probar 14 días",
+      };
+    };
+
+    const plans = [
+      mkPlan("Starter", "", "", "", ["Hasta 50 productos", "1 usuario", "POS + control de stock", "Soporte por email"], { free: true, stripe: "#9CA3AF" }),
+      mkPlan("Básico", "$14.900", "$149.000", "", ["Hasta 500 productos", "2 usuarios", "Reportes básicos", "Etiquetas de góndola"], { stripe: "#3B82F6" }),
+      mkPlan("Pro", "$32.900", "$329.000", "", ["Hasta 5.000 productos", "5 usuarios", "Dashboard completo", "Código de barras + CSV", "Mercado Pago integrado"], { popular: true, stripe: "linear-gradient(90deg,#1E40AF,#3B82F6)" }),
+      mkPlan("Cadena", "$69.900", "$699.000", "", ["Productos ilimitados", "Usuarios ilimitados", "Multi-sucursal", "API + onboarding dedicado"], { stripe: "#7c3aed" }),
+    ];
+
+    return {
+      tab: s.tab,
+      isPos: s.tab === "pos",
+      isDash: s.tab === "dashboard",
+      isAdmin: s.tab === "admin",
+      setPos: setTab("pos"),
+      setDash: setTab("dashboard"),
+      setAdmin: setTab("admin"),
+      tabPos: this.tabStyle(s.tab === "pos"),
+      tabDash: this.tabStyle(s.tab === "dashboard"),
+      tabAdmin: this.tabStyle(s.tab === "admin"),
+      faqs,
+      annual,
+      toggleAnnual: () => this.setState({ annual: !s.annual }),
+      mColor: annual ? "#6B7280" : "#111827",
+      aColor: annual ? "#111827" : "#6B7280",
+      switchTrack: "position:relative;width:48px;height:26px;border-radius:999px;border:0;cursor:pointer;background:" + (annual ? "#1E40AF" : "#CBD5E1") + ";",
+      switchKnob: "position:absolute;top:3px;left:" + (annual ? "25px" : "3px") + ";width:20px;height:20px;border-radius:50%;background:#fff;transition:left .18s;box-shadow:0 1px 3px rgba(0,0,0,.3);",
+      plans,
+    };
+  }
+}
+</script>
+</body>
+</html>
