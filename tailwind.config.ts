@@ -69,6 +69,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
         sm: "0.25rem",
@@ -87,6 +88,8 @@ const config: Config = {
         "spin-slow": "spin 8s linear infinite",
         "gradient-x": "gradientX 6s ease infinite",
         "bounce-soft": "bounceSoft 2s ease-in-out infinite",
+        marquee: "marquee 32s linear infinite",
+        "count-blink": "countBlink 1s steps(1) infinite",
       },
       keyframes: {
         fadeInUp: {
@@ -116,6 +119,14 @@ const config: Config = {
         bounceSoft: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-6px)" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        countBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.4" },
         },
       },
       backgroundSize: {

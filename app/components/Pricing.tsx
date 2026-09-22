@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "./Analytics";
 
 function scrollToSection(id: string) {
@@ -11,58 +11,50 @@ function scrollToSection(id: string) {
 const plans = [
   {
     name: "Starter",
-    price: "Gratis",
-    priceNote: "para siempre",
-    features: ["Hasta 50 productos", "1 usuario", "Funciones básicas", "Soporte por email"],
-    cta: "Empezá gratis",
+    monthly: 0,
+    annual: 0,
+    free: true,
+    features: ["Hasta 50 productos", "1 usuario", "POS + control de stock", "Soporte por email"],
     highlighted: false,
-    color: "from-gray-400 to-gray-500",
   },
   {
     name: "Básico",
-    price: "$12.900",
-    priceNote: "/ mes",
-    features: ["Hasta 500 productos", "2 usuarios", "Reportes básicos", "Soporte prioritario"],
-    cta: "Empezá gratis",
+    monthly: 14900,
+    annual: 149000,
+    features: ["Hasta 500 productos", "2 usuarios", "Reportes básicos", "Etiquetas de góndola"],
     highlighted: false,
-    color: "from-blue-400 to-blue-500",
   },
   {
     name: "Pro",
-    price: "$29.900",
-    priceNote: "/ mes",
+    monthly: 32900,
+    annual: 329000,
     features: [
       "Hasta 5.000 productos",
       "5 usuarios",
-      "Reportes avanzados",
-      "Código de barras",
-      "Exportación CSV",
+      "Dashboard completo",
+      "Código de barras + CSV",
+      "Mercado Pago integrado",
     ],
-    cta: "Empezá gratis",
     highlighted: true,
-    badge: "Más popular",
-    color: "from-primary to-primary-light",
+    badge: "Más elegido",
   },
   {
     name: "Cadena",
-    price: "$59.900",
-    priceNote: "/ mes",
-    features: [
-      "Productos ilimitados",
-      "Usuarios ilimitados",
-      "Multi-sucursal",
-      "API",
-      "Onboarding dedicado",
-    ],
-    cta: "Empezá gratis",
+    monthly: 69900,
+    annual: 699000,
+    features: ["Productos ilimitados", "Usuarios ilimitados", "Multi-sucursal", "API + onboarding dedicado"],
     highlighted: false,
-    color: "from-violet-500 to-purple-600",
   },
 ];
+
+function formatARS(n: number) {
+  return "$" + n.toLocaleString("es-AR");
+}
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const tracked = useRef(false);
+  const [annual, setAnnual] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +75,7 @@ export default function Pricing() {
   }, []);
 
   function handleCTA(planName: string) {
-    trackEvent("cta_click", { location: "pricing", label: "Empezá gratis", plan: planName });
+    trackEvent("cta_click", { location: "pricing", label: "Probar", plan: planName });
     scrollToSection("cta-final");
   }
 
@@ -91,102 +83,112 @@ export default function Pricing() {
     <section
       id="pricing"
       ref={sectionRef}
-      className="relative bg-gray-50 py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative bg-surface-container-lowest py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5"
-          style={{ background: "radial-gradient(circle, #1E40AF, transparent)" }} />
+        <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full ambient-blob-blue" />
       </div>
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100">
+        <div className="text-center mb-10">
+          <span className="eyebrow-chip text-primary-light bg-blue-500/10 border-blue-500/25">
             Precios claros
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-dark mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
             Elegí el plan que se adapta a tu negocio
           </h2>
-          <p className="text-lg text-medium">
-            Comenzá gratis.{" "}
-            <strong className="text-dark">Crecé cuando quieras.</strong>
+          <p className="text-lg text-on-surface-variant">
+            Empezá gratis. <strong className="text-white">Crecé cuando quieras.</strong> Precios en pesos, sin sorpresas en dólares.
           </p>
+        </div>
+
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <span className={`text-sm font-semibold transition-colors ${!annual ? "text-white" : "text-on-surface-variant/50"}`}>
+            Mensual
+          </span>
+          <button
+            onClick={() => setAnnual((a) => !a)}
+            className={`relative w-12 h-6.5 rounded-full transition-colors ${annual ? "bg-primary" : "bg-surface-container-high"}`}
+            style={{ width: 48, height: 26 }}
+            aria-label="Alternar facturación anual"
+          >
+            <span
+              className="absolute top-[3px] w-5 h-5 rounded-full bg-white shadow-md transition-all"
+              style={{ left: annual ? 25 : 3 }}
+            />
+          </button>
+          <span className={`text-sm font-semibold transition-colors ${annual ? "text-white" : "text-on-surface-variant/50"}`}>
+            Anual <span className="text-teal font-bold">−2 meses</span>
+          </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10 items-start">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative flex flex-col transition-all duration-300 ${
-                plan.highlighted
-                  ? "pricing-pro rounded-2xl p-7 hover:-translate-y-2"
-                  : "bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1"
-              }`}
-            >
-              {/* Popular badge */}
-              {plan.badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-primary to-primary-light text-white text-xs font-bold px-5 py-1.5 rounded-full shadow-md whitespace-nowrap">
-                    {plan.badge} ⭐
-                  </span>
-                </div>
-              )}
-
-              {/* Color stripe */}
-              <div className={`h-1 bg-gradient-to-r ${plan.color} rounded-full mb-5 ${plan.highlighted ? "h-1.5" : ""}`} />
-
-              <div className="mb-6">
-                <h3 className="text-xl font-extrabold text-dark mb-3">
-                  {plan.name}
-                </h3>
-                <div className="flex items-baseline gap-1">
-                  <span className={`text-3xl font-extrabold ${plan.highlighted ? "text-primary" : "text-dark"}`}>
-                    {plan.price}
-                  </span>
-                  <span className="text-medium text-sm">{plan.priceNote}</span>
-                </div>
-                {plan.highlighted && (
-                  <p className="text-success text-xs font-semibold mt-1">
-                    ✓ 14 días gratis incluidos
-                  </p>
-                )}
-              </div>
-
-              <ul className="space-y-3 mb-8 flex-1">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2.5">
-                    <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${plan.highlighted ? "bg-primary text-white" : "bg-green-100 text-success"}`}>
-                      ✓
-                    </span>
-                    <span className="text-dark text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handleCTA(plan.name)}
-                className={`w-full py-3.5 rounded-xl font-bold text-base min-h-[48px] transition-all hover:scale-105 active:scale-95 ${
+          {plans.map((plan) => {
+            const price = plan.free ? "Gratis" : formatARS(annual ? plan.annual : plan.monthly);
+            const period = plan.free ? "para siempre" : annual ? "/ año" : "/ mes";
+            return (
+              <div
+                key={plan.name}
+                className={`relative flex flex-col rounded-2xl p-7 transition-all duration-300 ${
                   plan.highlighted
-                    ? "bg-gradient-to-r from-primary to-primary-light text-white shadow-md hover:shadow-lg glow-primary"
-                    : "bg-light text-primary border-2 border-primary hover:bg-primary hover:text-white"
+                    ? "pricing-pro"
+                    : "bg-surface-container border border-border hover:border-primary-light/50 hover:-translate-y-1"
                 }`}
               >
-                {plan.cta}
-              </button>
-            </div>
-          ))}
+                {plan.badge && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
+                    <span className="btn-primary text-[11px] px-4 py-1 rounded-full whitespace-nowrap">
+                      {plan.badge} ⭐
+                    </span>
+                  </div>
+                )}
+
+                <h3 className="text-lg font-extrabold text-white mb-3">{plan.name}</h3>
+                <div className="flex items-baseline gap-1.5 mb-1">
+                  <span className={`text-3xl font-extrabold font-mono ${plan.highlighted ? "text-accent" : "text-white"}`}>
+                    {price}
+                  </span>
+                  <span className="text-xs text-on-surface-variant/60">{period}</span>
+                </div>
+                <p className="text-teal text-xs font-bold min-h-[16px] mb-4">
+                  {!plan.free && "14 días gratis incluidos"}
+                </p>
+
+                <div className="h-px bg-border mb-5" />
+
+                <ul className="space-y-3 mb-7 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2.5 text-sm text-on-surface">
+                      <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${plan.highlighted ? "bg-accent text-white" : "bg-teal-container/20 text-teal"}`}>
+                        ✓
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleCTA(plan.name)}
+                  className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 ${
+                    plan.highlighted
+                      ? "btn-primary"
+                      : "border-2 border-primary-light/40 text-white hover:bg-primary-light/10"
+                  }`}
+                >
+                  {plan.free ? "Empezá gratis" : "Probar 14 días"}
+                </button>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Price anchor */}
-        <div className="text-center bg-gradient-to-r from-blue-50 to-amber-50 rounded-2xl p-7 border border-blue-100">
-          <p className="text-dark font-medium text-lg">
-            💡 ¿Cuánto perdés por mes sin control?{" "}
-            <span className="text-primary font-bold">
-              $12.900/mes es menos que una sola venta perdida.
-            </span>
+        <div className="text-center bento-card rounded-2xl p-7">
+          <p className="text-white font-medium text-lg">
+            💡 ¿Cuánto perdés por mes sin control de márgenes?{" "}
+            <span className="text-accent font-bold">El plan Pro cuesta menos que una sola venta a pérdida.</span>
           </p>
-          <p className="text-medium text-sm mt-2">
-            Garantía 30 días — si no quedás conforme, te devolvemos el dinero sin preguntas.
+          <p className="text-on-surface-variant text-sm mt-2">
+            Garantía de 30 días. Si no te sirve, te devolvemos el dinero sin preguntas.
           </p>
         </div>
       </div>
