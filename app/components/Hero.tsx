@@ -2,10 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUp,
   BarChart3,
+  Banknote,
   Check,
+  Coins,
+  HeartPulse,
   LineChart,
+  Scale,
   Star,
   TriangleAlert,
 } from "lucide-react";
@@ -21,19 +27,32 @@ function formatARS(n: number) {
 }
 
 const DAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
-const DAILY_SALES = [32000, 26000, 41000, 30000, 52000, 61000, 22000];
+const SALES = [34000, 28000, 45000, 32000, 56000, 64000, 26000];
+const EXPENSES = [9500, 7800, 12500, 8900, 15700, 17900, 7300];
+const PROFIT = [12900, 10600, 17100, 12200, 21300, 24300, 9900];
+const RESULT = PROFIT.map((p, i) => p - EXPENSES[i]);
 
-const STATS = [
-  { key: "sales", label: "Ventas", color: "var(--chart-sales)", target: 284900 },
-  { key: "expenses", label: "Gastos", color: "var(--chart-expenses)", target: 42000 },
-  { key: "profit", label: "Ganancia", color: "var(--chart-profit)", target: 108000 },
-  { key: "result", label: "Resultado", color: "var(--chart-result)", target: 66000 },
-];
+type ViewId = "sales" | "expenses" | "profit" | "result";
 
-function useCountUp(target: number, active: boolean, durationMs = 1400) {
+const VIEWS: Record<
+  ViewId,
+  { label: string; icon: typeof Coins; color: string; data: number[]; change: number; inverse?: boolean }
+> = {
+  sales: { label: "Ventas", icon: Coins, color: "var(--chart-sales)", data: SALES, change: 18 },
+  expenses: { label: "Gastos", icon: Banknote, color: "var(--chart-expenses)", data: EXPENSES, change: 6, inverse: true },
+  profit: { label: "Ganancia", icon: HeartPulse, color: "var(--chart-profit)", data: PROFIT, change: 21 },
+  result: { label: "Resultado", icon: Scale, color: "var(--chart-result)", data: RESULT, change: 14 },
+};
+
+const VIEW_ORDER: ViewId[] = ["sales", "expenses", "profit", "result"];
+
+function useCountUp(target: number, active: boolean, durationMs = 900) {
   const [value, setValue] = useState(0);
   useEffect(() => {
-    if (!active) return;
+    if (!active) {
+      setValue(0);
+      return;
+    }
     const start = performance.now();
     let raf: number;
     function tick(now: number) {
@@ -48,48 +67,36 @@ function useCountUp(target: number, active: boolean, durationMs = 1400) {
   return value;
 }
 
-function StatTile({ label, color, target, active }: { label: string; color: string; target: number; active: boolean }) {
-  const value = useCountUp(target, active);
-  return (
-    <div className="bg-surface-high border border-border rounded-lg px-3 py-2.5">
-      <p className="text-[11px] font-semibold uppercase tracking-wide flex items-center gap-1.5 text-on-surface-variant">
-        <span className="inline-block w-2 h-2 rounded-sm flex-shrink-0" style={{ background: color }} />
-        {label}
-      </p>
-      <p className="font-mono font-extrabold text-base sm:text-lg leading-tight mt-1 text-on-surface">
-        {formatARS(value)}
-      </p>
-    </div>
-  );
-}
-
-function DailyMiniChart({ mode, revealed }: { mode: "bar" | "line"; revealed: boolean }) {
+function DailyMiniChart({ data, color, mode, revealed }: { data: number[]; color: string; mode: "bar" | "line"; revealed: boolean }) {
   const width = 460;
   const height = 100;
-  const max = Math.max(...DAILY_SALES) * 1.15;
-  const bandW = width / DAILY_SALES.length;
+  const max = Math.max(...data, 1) * 1.15;
+  const min = Math.min(0, ...data);
+  const bandW = width / data.length;
   const xAt = (i: number) => i * bandW + bandW / 2;
-  const yAt = (v: number) => height - (v / max) * height;
+  const yAt = (v: number) => height - ((v - min) / (max - min)) * height;
+  const zeroY = yAt(0);
 
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
-      className="w-full h-[100px] transition-opacity duration-500"
+      className="w-full h-[100px] transition-opacity duration-300"
       style={{ opacity: revealed ? 1 : 0 }}
       preserveAspectRatio="none"
     >
       {mode === "bar" ? (
-        DAILY_SALES.map((v, i) => {
+        data.map((v, i) => {
           const barW = bandW * 0.56;
+          const top = Math.min(yAt(v), zeroY);
           return (
             <rect
               key={i}
               x={xAt(i) - barW / 2}
-              y={yAt(v)}
+              y={top}
               width={barW}
-              height={height - yAt(v)}
+              height={Math.max(1, Math.abs(yAt(v) - zeroY))}
               rx={3}
-              fill="var(--chart-sales)"
+              fill={color}
             />
           );
         })
@@ -97,14 +104,14 @@ function DailyMiniChart({ mode, revealed }: { mode: "bar" | "line"; revealed: bo
         <>
           <polyline
             fill="none"
-            stroke="var(--chart-sales)"
+            stroke={color}
             strokeWidth={2.5}
             strokeLinejoin="round"
             strokeLinecap="round"
-            points={DAILY_SALES.map((v, i) => `${xAt(i)},${yAt(v)}`).join(" ")}
+            points={data.map((v, i) => `${xAt(i)},${yAt(v)}`).join(" ")}
           />
-          {DAILY_SALES.map((v, i) => (
-            <circle key={i} cx={xAt(i)} cy={yAt(v)} r={3.5} fill="var(--chart-sales)" stroke="var(--color-surface)" strokeWidth={1.5} />
+          {data.map((v, i) => (
+            <circle key={i} cx={xAt(i)} cy={yAt(v)} r={3.5} fill={color} stroke="var(--color-surface)" strokeWidth={1.5} />
           ))}
         </>
       )}
@@ -114,14 +121,24 @@ function DailyMiniChart({ mode, revealed }: { mode: "bar" | "line"; revealed: bo
 
 type Toast = { id: number; amount: number };
 
-/** Mockup del dashboard real de ventas de Omero. A diferencia del POS del
- * cajero (que la app fuerza siempre oscuro), el dashboard del dueño sí
- * respeta el tema claro/oscuro — así que este widget hace lo mismo. */
+/** Mockup del dashboard real de ventas de Omero: pestañas Ventas / Gastos /
+ * Ganancia / Resultado, igual que el selector de vistas del DailyChart real
+ * — cada una cambia el número grande y el gráfico de 7 días. A diferencia
+ * del POS del cajero (que la app fuerza siempre oscuro), el dashboard del
+ * dueño sí respeta el tema claro/oscuro — así que este widget hace lo mismo. */
 function SalesDashboard() {
   const [revealed, setRevealed] = useState(false);
+  const [activeView, setActiveView] = useState<ViewId>("sales");
   const [mode, setMode] = useState<"bar" | "line">("bar");
   const [toasts, setToasts] = useState<Toast[]>([]);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  const view = VIEWS[activeView];
+  const total = view.data.reduce((a, b) => a + b, 0);
+  const value = useCountUp(total, revealed);
+  const up = view.change >= 0;
+  const good = view.inverse ? !up : up;
+  const changeColor = good ? "var(--chart-profit)" : "var(--chart-expenses)";
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -151,6 +168,11 @@ function SalesDashboard() {
     return () => clearInterval(interval);
   }, [revealed]);
 
+  function selectView(id: ViewId) {
+    setActiveView(id);
+    trackEvent("hero_dashboard_view", { view: id });
+  }
+
   function setChartMode(next: "bar" | "line") {
     setMode(next);
     trackEvent("hero_dashboard_chart_toggle", { mode: next });
@@ -176,18 +198,48 @@ function SalesDashboard() {
         </div>
 
         <div className="p-5">
-          {/* Ventas / Gastos / Ganancia / Resultado */}
-          <div className="grid grid-cols-2 gap-2 mb-4">
-            {STATS.map((s) => (
-              <StatTile key={s.key} label={s.label} color={s.color} target={s.target} active={revealed} />
-            ))}
+          {/* Pestañas: Ventas / Gastos / Ganancia / Resultado */}
+          <div className="flex gap-1.5 mb-4 overflow-x-auto">
+            {VIEW_ORDER.map((id) => {
+              const v = VIEWS[id];
+              const active = activeView === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => selectView(id)}
+                  aria-pressed={active}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors flex-shrink-0 ${
+                    active
+                      ? "bg-primary-light/15 border-primary-light text-on-surface"
+                      : "bg-surface-high border-border text-on-surface-variant hover:text-on-surface"
+                  }`}
+                >
+                  <v.icon className="w-3.5 h-3.5" style={{ color: active ? v.color : undefined }} />
+                  {v.label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Selector barras / líneas */}
-          <div className="flex items-center justify-between mb-2">
+          {/* Número grande de la vista activa */}
+          <div className="flex items-center justify-between mb-1">
             <span className="text-[11px] uppercase tracking-widest text-on-surface-variant/70">
-              Ventas — últimos 7 días
+              {view.label} — últimos 7 días
             </span>
+            <span className="inline-flex items-center gap-1 text-xs font-bold" style={{ color: changeColor }}>
+              {up ? <ArrowUp className="w-3.5 h-3.5" /> : <ArrowDown className="w-3.5 h-3.5" />}
+              {Math.abs(view.change)}% vs. semana pasada
+            </span>
+          </div>
+          <p
+            className="font-mono font-extrabold text-4xl sm:text-5xl mb-4 transition-colors duration-300"
+            style={{ color: view.color, textShadow: `0 0 16px color-mix(in srgb, ${view.color} 45%, transparent)` }}
+          >
+            {formatARS(value)}
+          </p>
+
+          {/* Selector barras / líneas */}
+          <div className="flex items-center justify-end mb-2">
             <div className="inline-flex rounded-lg border border-border overflow-hidden">
               {(["bar", "line"] as const).map((m) => (
                 <button
@@ -207,7 +259,7 @@ function SalesDashboard() {
             </div>
           </div>
 
-          <DailyMiniChart mode={mode} revealed={revealed} />
+          <DailyMiniChart data={view.data} color={view.color} mode={mode} revealed={revealed} />
           <div className="flex mt-1.5">
             {DAY_LABELS.map((d) => (
               <span key={d} className="flex-1 text-center text-[10px] text-on-surface-variant/60 font-mono">
