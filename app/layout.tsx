@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Analytics from "./components/Analytics";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -63,10 +71,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={inter.variable}>
-      <body className="font-sans antialiased">
+    <html lang="es" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("omero-theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark");}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="font-sans antialiased bg-bg text-on-surface" suppressHydrationWarning>
         <Analytics />
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

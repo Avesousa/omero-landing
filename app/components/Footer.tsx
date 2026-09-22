@@ -8,51 +8,52 @@ function scrollToSection(id: string) {
 
 export default function Footer() {
   return (
-    <footer className="bg-dark py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <footer className="relative bg-surface-container-lowest pt-16 pb-10 px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
-          <div>
-            <p className="text-2xl font-extrabold text-primary-light">Omero</p>
-            <p className="text-medium text-sm mt-1">
-              Gestión simple para comercios argentinos
-            </p>
+          <div className="flex items-center gap-3">
+            <svg width="32" height="32" viewBox="0 0 48 48">
+              <rect width="48" height="48" rx="10" fill="#1E40AF" />
+              <circle cx="24" cy="25" r="11" fill="none" stroke="white" strokeWidth="6" />
+              <polygon points="24,7 29,14 19,14" fill="white" />
+            </svg>
+            <div className="text-left">
+              <p className="text-xl font-extrabold text-on-surface">omero</p>
+              <p className="text-on-surface-variant/60 text-sm">
+                Gestión simple para comercios argentinos
+              </p>
+            </div>
           </div>
 
           <nav className="flex flex-wrap items-center justify-center gap-6">
             <button
               onClick={() => scrollToSection("solucion")}
-              className="text-gray-400 hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Producto
             </button>
             <button
               onClick={() => scrollToSection("pricing")}
-              className="text-gray-400 hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Precios
             </button>
             <button
               onClick={() => scrollToSection("cta-final")}
-              className="text-gray-400 hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Contacto
             </button>
           </nav>
         </div>
 
-        <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">© 2026 Omero. Todos los derechos reservados.</p>
+        <div className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-on-surface-variant/60 text-sm">© 2026 Omero. Todos los derechos reservados.</p>
           <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
-            >
+            <a href="#" className="text-on-surface-variant/60 hover:text-on-surface-variant text-sm transition-colors">
               Términos
             </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
-            >
+            <a href="#" className="text-on-surface-variant/60 hover:text-on-surface-variant text-sm transition-colors">
               Privacidad
             </a>
           </div>

@@ -1,8 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
 
   async headers() {
+    // Next dev's HMR/react-refresh runtime relies on eval(); without
+    // 'unsafe-eval' the CSP blocks it and every client component fails
+    // to hydrate in `next dev`. Production builds don't need eval, so
+    // this only loosens the policy locally, never in a deployed build.
+    const isDev = process.env.NODE_ENV === "development";
+    const scriptSrc = [
+      "'self'",
+      "'unsafe-inline'",
+      ...(isDev ? ["'unsafe-eval'"] : []),
+      "https://www.googletagmanager.com",
+      "https://connect.facebook.net",
+      "https://static.hotjar.com",
+      "https://script.hotjar.com",
+    ].join(" ");
+
     return [
       {
         source: "/(.*)",
@@ -19,7 +35,7 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://static.hotjar.com https://script.hotjar.com",
+              `script-src ${scriptSrc}`,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https://www.google-analytics.com https://www.facebook.com https://www.hotjar.com",
               "font-src 'self'",

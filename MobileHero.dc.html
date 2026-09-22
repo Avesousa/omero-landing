@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Inter", system-ui, -apple-system, sans-serif; background:#F0F4F8; color:#111827; line-height:1.5; }
+    h1,h2,p { margin:0; }
+    a { color:#FF6B00; text-decoration:none; }
+    a:hover { color:#E65A00; }
+    @keyframes livePulse { 0%,100%{ box-shadow:0 0 0 0 rgba(56,222,187,.5);} 50%{ box-shadow:0 0 0 6px rgba(56,222,187,0);} }
+    @keyframes shimmer { 0%{background-position:-200% center;} 100%{background-position:200% center;} }
+    .live-dot { width:7px; height:7px; border-radius:50%; background:#38DEBB; animation:livePulse 1.8s ease-in-out infinite; flex:0 0 auto; }
+    .gradient-text { background:linear-gradient(135deg,#FF6B00,#ffb693 50%,#FF6B00); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shimmer 3s linear infinite; }
+  </style>
+</helmet>
+
+<div style="width:390px; min-height:844px; background:linear-gradient(180deg,#FFFFFF,#F0F4F8);">
+
+  <!-- top nav -->
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid #E5E7EB;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <svg width="26" height="26" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="10" fill="#1E40AF"></rect>
+        <circle cx="24" cy="25" r="11" fill="none" stroke="white" stroke-width="6"></circle>
+        <polygon points="24,7 29,14 19,14" fill="white"></polygon>
+      </svg>
+      <span style="font-size:19px; font-weight:800; letter-spacing:-.03em; color:#111827;">omero</span>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px;">
+      <span style="width:20px; height:2px; background:#374151;"></span>
+      <span style="width:20px; height:2px; background:#374151;"></span>
+      <span style="width:20px; height:2px; background:#374151;"></span>
+    </div>
+  </div>
+
+  <div style="padding:28px 20px 32px;">
+    <div style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E5E7EB; border-radius:999px; padding:6px 12px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:18px;">
+      <span class="live-dot"></span>
+      <span style="color:#FF6B00; font-weight:800; font-size:12px;">★★★★★</span>
+      <span style="color:#374151; font-size:12px; font-weight:600;">+50 comercios</span>
+    </div>
+
+    <h1 style="font-size:32px; line-height:1.12; font-weight:800; letter-spacing:-.03em; margin-bottom:14px; text-wrap:balance;">
+      El sistema que tu comercio ya sabe usar. <span class="gradient-text">Omero.</span>
+    </h1>
+    <p style="font-size:15px; color:#374151; margin-bottom:22px;">
+      Stock, márgenes y precios bajo control desde la caja o el celular. <strong style="color:#111827;">Sin planillas.</strong>
+    </p>
+
+    <button style="width:100%; background:linear-gradient(180deg,#FF6B00,#E65A00); color:#fff; border:1px solid #ff8533; border-radius:12px; box-shadow:0 0 16px rgba(255,107,0,.25); font-weight:700; font-size:16px; padding:15px; cursor:pointer; min-height:52px;">Empezá gratis — 14 días</button>
+    <button style="width:100%; margin-top:10px; background:#fff; color:#374151; border:1px solid #D1D5DB; border-radius:12px; font-weight:600; font-size:16px; padding:15px; cursor:pointer; min-height:52px;">Ver demo del POS →</button>
+
+    <div style="display:flex; flex-direction:column; gap:8px; margin-top:18px;">
+      <span style="display:flex; align-items:center; gap:8px; color:#6B7280; font-size:13px;"><span style="color:#0d9488; font-weight:800;">✓</span> Sin tarjeta de crédito</span>
+      <span style="display:flex; align-items:center; gap:8px; color:#6B7280; font-size:13px;"><span style="color:#0d9488; font-weight:800;">✓</span> Cancelás cuando quieras</span>
+    </div>
+
+    <!-- mini dashboard card -->
+    <div style="margin-top:24px; background:#112036; border:1px solid #233554; border-radius:16px; padding:14px; box-shadow:0 16px 40px rgba(4,19,41,.28);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <span style="color:#8494b4; font-size:11px;">Omero — Dashboard</span>
+        <span style="display:flex; align-items:center; gap:6px; color:#38DEBB; font-size:11px;"><span class="live-dot"></span> En vivo</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="background:linear-gradient(135deg,rgba(168,85,247,.20),rgba(219,39,119,.20)); border:1px solid rgba(168,85,247,.30); border-radius:10px; padding:11px;">
+          <p style="color:#d8b4fe; font-size:10px; font-weight:600;">Total Ventas</p>
+          <p style="font-size:15px; font-weight:800; color:#fff;">$248.900</p>
+          <p style="color:#4ade80; font-size:10px;">↑ 12,4%</p>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(34,197,94,.20),rgba(5,150,105,.20)); border:1px solid rgba(34,197,94,.30); border-radius:10px; padding:11px;">
+          <p style="color:#86efac; font-size:10px; font-weight:600;">% Margen</p>
+          <p style="font-size:15px; font-weight:800; color:#fff;">38,2%</p>
+          <p style="color:#4ade80; font-size:10px;">↑ 3,1%</p>
+        </div>
+      </div>
+      <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center; background:rgba(239,68,68,.10); border:1px solid rgba(239,68,68,.3); border-radius:8px; padding:9px 11px;">
+        <span style="display:flex; align-items:center; gap:7px; color:#fff; font-size:12px;"><span style="width:6px; height:6px; border-radius:50%; background:#f87171;"></span> Harina 000 1kg</span>
+        <span style="color:#f87171; font-size:12px; font-weight:700;">3 u.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
