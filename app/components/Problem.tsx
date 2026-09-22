@@ -1,6 +1,8 @@
+import { PackageSearch, FileWarning, Wallet } from "lucide-react";
+
 const problems = [
   {
-    icon: "📦",
+    icon: PackageSearch,
     title: "Sin control de inventario",
     description: "Perdés ventas y plata sin darte cuenta — sin saber qué hay en el depósito.",
     stat: "72%",
@@ -8,7 +10,7 @@ const problems = [
     tone: "text-red-400 border-red-500/25 bg-red-500/10",
   },
   {
-    icon: "💰",
+    icon: Wallet,
     title: "Márgenes confusos",
     description: "Los precios cambian todo el tiempo y no sabés tu margen real en cada producto.",
     stat: "3 hs",
@@ -16,7 +18,7 @@ const problems = [
     tone: "text-amber-400 border-amber-500/25 bg-amber-500/10",
   },
   {
-    icon: "📋",
+    icon: FileWarning,
     title: "Planillas que no escalan",
     description: "Excel y cuadernos no pueden con el ritmo de un comercio activo. Se quedan cortos.",
     stat: "1 de 2",
@@ -38,13 +40,13 @@ export default function Problem() {
           <span className="eyebrow-chip text-red-300 bg-red-500/10 border-red-500/25">
             ¿Esto te pasa a vos?
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6 mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-6 mt-5">
             ¿Te suena familiar?
           </h2>
           <p className="text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
             ¿Cuántas veces perdiste una venta porque no sabías si tenías stock?
             ¿Cuántas horas perdiste haciendo inventario a mano? ¿Cuántos
-            productos vendiste <strong className="text-white">sin saber si te dejaban ganancia?</strong>
+            productos vendiste <strong className="text-on-surface">sin saber si te dejaban ganancia?</strong>
           </p>
         </div>
 
@@ -54,11 +56,11 @@ export default function Problem() {
               key={problem.title}
               className="bento-card rounded-2xl p-8 hover:-translate-y-1"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high text-3xl mb-5">
-                {problem.icon}
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high mb-5">
+                <problem.icon className="w-6 h-6 text-on-surface-variant" />
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-3">{problem.title}</h3>
+              <h3 className="text-xl font-bold text-on-surface mb-3">{problem.title}</h3>
               <p className="text-on-surface-variant leading-relaxed mb-6">{problem.description}</p>
 
               <div className={`inline-flex items-baseline gap-1.5 px-3 py-1.5 rounded-full text-sm border ${problem.tone}`}>
@@ -71,7 +73,7 @@ export default function Problem() {
 
         <p className="text-center text-on-surface-variant mt-12 text-lg">
           Los comercios que dan el salto,{" "}
-          <strong className="text-white">no vuelven a las planillas.</strong>
+          <strong className="text-on-surface">no vuelven a las planillas.</strong>
         </p>
       </div>
     </section>

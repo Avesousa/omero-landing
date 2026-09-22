@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -48,14 +49,12 @@ function FAQItem({
         <span className="font-mono text-accent/70 text-sm font-bold flex-shrink-0">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-semibold text-white text-base flex-1">{question}</span>
-        <span
-          className={`text-primary-light flex-shrink-0 text-xl font-light transition-transform duration-300 ${
-            isOpen ? "rotate-45" : ""
+        <span className="font-semibold text-on-surface text-base flex-1">{question}</span>
+        <ChevronDown
+          className={`text-primary-light flex-shrink-0 w-5 h-5 transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
           }`}
-        >
-          +
-        </span>
+        />
       </button>
 
       <div
@@ -81,7 +80,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-14">
           <span className="eyebrow-chip text-teal bg-teal/10 border-teal/25">Dudas frecuentes</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mt-5">
             Preguntas frecuentes
           </h2>
         </div>

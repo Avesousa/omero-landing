@@ -1,3 +1,5 @@
+import { ArrowRight, Ban, MessageCircle, ShieldCheck, Smartphone, Star } from "lucide-react";
+
 const testimonials = [
   {
     initials: "JP",
@@ -6,7 +8,8 @@ const testimonials = [
     location: "Morón, Zona Oeste",
     rating: 5,
     quote: "Antes tardaba 2 horas en actualizar precios. Ahora lo hago en 10 minutos con Omero.",
-    highlight: "2 horas → 10 minutos",
+    before: "2 horas",
+    after: "10 minutos",
   },
   {
     initials: "MG",
@@ -15,15 +18,16 @@ const testimonials = [
     location: "Haedo, Zona Oeste",
     rating: 5,
     quote: "El precio posta de cada producto, siempre a mano. Ya no pierdo plata en cada venta.",
-    highlight: "Cero pérdidas por precio",
+    before: null,
+    after: "Cero pérdidas por precio",
   },
 ];
 
 const trustBadges = [
-  { icon: "🔒", text: "Datos seguros y encriptados" },
-  { icon: "💬", text: "Soporte en español 24/7" },
-  { icon: "🚫", text: "Sin contrato de permanencia" },
-  { icon: "📱", text: "Funciona desde el celular" },
+  { icon: ShieldCheck, text: "Datos seguros y encriptados" },
+  { icon: MessageCircle, text: "Soporte en español 24/7" },
+  { icon: Ban, text: "Sin contrato de permanencia" },
+  { icon: Smartphone, text: "Funciona desde el celular" },
 ];
 
 export default function SocialProof() {
@@ -34,7 +38,7 @@ export default function SocialProof() {
           <span className="eyebrow-chip text-teal bg-teal/10 border-teal/25">
             Testimoniales reales
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
             Comercios como el tuyo ya lo usan
           </h2>
           <p className="text-on-surface-variant text-lg max-w-xl mx-auto">
@@ -51,7 +55,7 @@ export default function SocialProof() {
                 </span>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, i) => (
-                    <span key={i} className="text-accent text-sm">★</span>
+                    <Star key={i} className="w-3.5 h-3.5 text-accent fill-accent" />
                   ))}
                 </div>
               </div>
@@ -61,7 +65,7 @@ export default function SocialProof() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="font-bold text-white">{t.name}</p>
+                  <p className="font-bold text-on-surface">{t.name}</p>
                   <p className="text-on-surface-variant text-sm">{t.business} · {t.location}</p>
                 </div>
               </div>
@@ -72,14 +76,22 @@ export default function SocialProof() {
 
               <div className="flex items-center justify-between border-t border-dashed border-border pt-4">
                 <span className="text-on-surface-variant/60 text-xs uppercase tracking-wider">Resultado</span>
-                <span className="text-teal font-bold text-sm">{t.highlight}</span>
+                <span className="text-teal font-bold text-sm flex items-center gap-1.5">
+                  {t.before && (
+                    <>
+                      {t.before}
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </>
+                  )}
+                  {t.after}
+                </span>
               </div>
             </div>
           ))}
         </div>
 
         <div className="bento-card rounded-2xl p-8">
-          <p className="text-center text-white font-semibold text-lg mb-6">
+          <p className="text-center text-on-surface font-semibold text-lg mb-6">
             Diseñado para que puedas confiar
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -88,7 +100,7 @@ export default function SocialProof() {
                 key={badge.text}
                 className="flex flex-col items-center gap-2 text-center bg-surface-container-high rounded-xl p-4 border border-border"
               >
-                <span className="text-2xl">{badge.icon}</span>
+                <badge.icon className="w-6 h-6 text-teal" />
                 <span className="text-on-surface text-sm font-medium leading-snug">{badge.text}</span>
               </div>
             ))}

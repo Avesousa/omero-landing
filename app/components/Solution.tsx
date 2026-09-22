@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight, Percent, ScanLine, Tag, Zap } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
 function scrollToSection(id: string) {
@@ -10,19 +11,19 @@ function scrollToSection(id: string) {
 const steps = [
   {
     step: "01",
-    icon: "📷",
+    icon: ScanLine,
     text: "Cargá un producto con código de barras",
     time: "5 seg",
   },
   {
     step: "02",
-    icon: "💰",
+    icon: Percent,
     text: "Ves tu margen de ganancia calculado automáticamente",
     time: "Inmediato",
   },
   {
     step: "03",
-    icon: "🏷️",
+    icon: Tag,
     text: "Imprimís una etiqueta de precio actualizada",
     time: "10 seg",
   },
@@ -87,7 +88,7 @@ export default function Solution() {
             <span className="eyebrow-chip text-primary-light bg-blue-500/10 border-blue-500/25">
               Cómo funciona
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
               Omero es la solución.
             </h2>
             <p className="text-lg text-on-surface-variant mb-10 leading-relaxed">
@@ -99,15 +100,18 @@ export default function Solution() {
             <div className="space-y-5 mb-10">
               {steps.map((step) => (
                 <div key={step.step} className="flex items-start gap-4 group">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-surface-container-high border border-border flex items-center justify-center text-white font-mono font-extrabold text-sm shadow-md group-hover:border-primary-light transition-colors">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-surface-container-high border border-border flex items-center justify-center text-on-surface font-mono font-extrabold text-sm shadow-md group-hover:border-primary-light transition-colors">
                     {step.step}
                   </div>
                   <div className="flex-1 pt-1">
-                    <p className="text-white font-semibold leading-snug">
-                      <span className="mr-2">{step.icon}</span>
+                    <p className="text-on-surface font-semibold leading-snug flex items-center gap-2">
+                      <step.icon className="w-4 h-4 text-primary-light flex-shrink-0" />
                       {step.text}
                     </p>
-                    <p className="text-teal text-sm font-bold mt-0.5 font-mono">⚡ {step.time}</p>
+                    <p className="text-teal text-sm font-bold mt-0.5 font-mono flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5" />
+                      {step.time}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -115,10 +119,10 @@ export default function Solution() {
 
             <button
               onClick={handleCTA}
-              className="btn-primary inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-base hover:scale-105 active:scale-95 transition-transform"
+              className="btn-primary inline-flex items-center justify-center gap-2 whitespace-nowrap px-7 py-3.5 rounded-xl text-base hover:scale-105 active:scale-95 transition-transform"
             >
-              Empezá gratis ahora
-              <span className="text-xl">→</span>
+              Empezar ahora
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>

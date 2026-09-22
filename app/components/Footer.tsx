@@ -25,7 +25,7 @@ export default function Footer() {
               <polygon points="24,7 29,14 19,14" fill="white" />
             </svg>
             <div className="text-left">
-              <p className="text-xl font-extrabold text-white">omero</p>
+              <p className="text-xl font-extrabold text-on-surface">omero</p>
               <p className="text-on-surface-variant/60 text-sm">
                 Gestión simple para comercios argentinos
               </p>
@@ -35,19 +35,19 @@ export default function Footer() {
           <nav className="flex flex-wrap items-center justify-center gap-6">
             <button
               onClick={() => scrollToSection("solucion")}
-              className="text-on-surface-variant hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Producto
             </button>
             <button
               onClick={() => scrollToSection("pricing")}
-              className="text-on-surface-variant hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Precios
             </button>
             <button
               onClick={() => scrollToSection("cta-final")}
-              className="text-on-surface-variant hover:text-white transition-colors text-sm"
+              className="text-on-surface-variant hover:text-on-surface transition-colors text-sm"
             >
               Contacto
             </button>

@@ -1,3 +1,5 @@
+import { Check, X } from "lucide-react";
+
 const rows = [
   { label: "Control de stock en tiempo real", excel: false, omero: true },
   { label: "Cálculo automático de márgenes", excel: false, omero: true },
@@ -14,9 +16,9 @@ function Cell({ value }: { value: boolean | string }) {
     return <span className="font-mono text-sm">{value}</span>;
   }
   return value ? (
-    <span className="text-teal text-lg font-bold">✓</span>
+    <Check className="w-5 h-5 text-teal mx-auto" strokeWidth={2.5} />
   ) : (
-    <span className="text-red-400 text-lg font-bold">✕</span>
+    <X className="w-5 h-5 text-red-400 mx-auto" strokeWidth={2.5} />
   );
 }
 
@@ -28,7 +30,7 @@ export default function Comparison() {
           <span className="eyebrow-chip text-primary-light bg-blue-500/10 border-blue-500/25">
             La comparación real
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
             Tu planilla contra Omero, cara a cara
           </h2>
           <p className="text-lg text-on-surface-variant">
@@ -43,7 +45,7 @@ export default function Comparison() {
               <span className="text-on-surface-variant/70 font-semibold text-sm">Planilla / Excel</span>
             </div>
             <div className="px-5 py-4 text-center min-w-[110px] bg-primary/10 border-l border-primary/20">
-              <span className="text-white font-extrabold text-sm">Omero</span>
+              <span className="text-on-surface font-extrabold text-sm">Omero</span>
             </div>
           </div>
 
@@ -60,7 +62,7 @@ export default function Comparison() {
               <div className="px-5 py-4 text-center min-w-[110px] text-on-surface-variant/70">
                 <Cell value={row.excel} />
               </div>
-              <div className="px-5 py-4 text-center min-w-[110px] bg-primary/5 border-l border-primary/10 text-white">
+              <div className="px-5 py-4 text-center min-w-[110px] bg-primary/5 border-l border-primary/10">
                 <Cell value={row.omero} />
               </div>
             </div>

@@ -1,36 +1,37 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Boxes, CreditCard, ScanBarcode, Smartphone, Tag, TrendingUp } from "lucide-react";
 
 const benefits = [
   {
-    emoji: "📦",
+    icon: Boxes,
     title: "Control de stock real",
     description: "Sabés qué tenés sin contar físicamente. Alerta automática cuando el stock es bajo, en cualquier sucursal.",
     wide: true,
   },
   {
-    emoji: "💰",
+    icon: TrendingUp,
     title: "Márgenes automáticos",
     description: "Nunca más vendés a pérdida sin saberlo. El sistema calcula tu ganancia en tiempo real.",
   },
   {
-    emoji: "🏷️",
+    icon: Tag,
     title: "Etiquetas de precios",
     description: "Actualizás todos los precios en minutos. Un cambio, todos los carteles actualizados.",
   },
   {
-    emoji: "📱",
+    icon: Smartphone,
     title: "App desktop + web",
     description: "Usás desde la caja o desde el celular. Funciona sin internet en la app desktop.",
   },
   {
-    emoji: "🔍",
+    icon: ScanBarcode,
     title: "Código de barras",
     description: "Escaneás y listo. Sin errores de tipeo, sin perder tiempo buscando el producto.",
   },
   {
-    emoji: "💳",
+    icon: CreditCard,
     title: "Cobro con Mercado Pago integrado",
     description: "Pago mixto efectivo + QR en la misma venta, con cálculo de vuelto y cierre de caja diario automático.",
     wide: true,
@@ -98,7 +99,7 @@ export default function Benefits() {
           <span className="eyebrow-chip text-accent bg-accent/10 border-accent/25">
             Funcionalidades
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
             Todo lo que tu negocio necesita
           </h2>
           <p className="text-on-surface-variant text-lg max-w-xl mx-auto">
@@ -114,10 +115,10 @@ export default function Benefits() {
                 benefit.wide ? "md:col-span-2" : ""
               }`}
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high text-2xl mb-5">
-                {benefit.emoji}
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high mb-5">
+                <benefit.icon className="w-6 h-6 text-accent" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">{benefit.title}</h3>
+              <h3 className="text-xl font-bold text-on-surface mb-3">{benefit.title}</h3>
               <p className="text-on-surface-variant leading-relaxed text-sm max-w-md">
                 {benefit.description}
               </p>

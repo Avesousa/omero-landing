@@ -10,62 +10,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ── Omero Brand (CEO approved) ───────────────────────
-        primary: "#1E40AF",           // Azul Omero — alma de la marca
-        "primary-light": "#3B82F6",   // azul medio
-        "primary-deep": "#1e3a8a",    // azul oscuro
+        // ── Tokens ligados a variables CSS (app/globals.css) —
+        // reaccionan al atributo data-theme, igual que en /omero ──
+        primary: "var(--color-primary)",
+        "primary-light": "var(--color-primary-light)",
+        "primary-deep": "var(--color-primary-deep)",
 
-        // ── Nocturne Surfaces ────────────────────────────────
-        surface: "#041329",
-        "surface-dim": "#041329",
-        "surface-bright": "#2c3951",
-        "surface-container-lowest": "#010e24",
-        "surface-container-low": "#0d1c32",
-        "surface-container": "#112036",
-        "surface-container-high": "#1c2a41",
-        "surface-container-highest": "#27354c",
-        "surface-variant": "#27354c",
+        accent: "var(--color-accent)",
+        "accent-dim": "var(--color-accent-dim)",
+        "accent-light": "var(--color-accent-light)",
 
-        // ── On-Surface (text on dark bg) ─────────────────────
-        "on-surface": "#d6e3ff",
-        "on-surface-variant": "#e2bfb0",
-        "inverse-surface": "#d6e3ff",
-        "inverse-on-surface": "#233148",
+        teal: "var(--color-teal)",
+        success: "var(--color-success)",
+        error: "var(--color-error)",
 
-        // ── Orange Accent (Nocturne CTA) ─────────────────────
-        accent: "#FF6B00",            // Electric Orange — acción
-        "accent-dim": "#E65A00",      // naranja profundo (gradiente)
-        "accent-light": "#ffb693",    // naranja suave
-        "accent-container": "#FF6B00",
-        "on-accent": "#561f00",
-        "inverse-accent": "#a04100",
+        bg: "var(--color-bg)",
+        "surface-low": "var(--color-surface-low)",
+        surface: "var(--color-surface)",
+        "surface-high": "var(--color-surface-high)",
+        "surface-highest": "var(--color-surface-highest)",
 
-        // ── Teal / Tertiary (Nocturne success) ───────────────
-        teal: "#38DEBB",              // verde-turquesa — crecimiento
-        "teal-container": "#00AD8F",
-        "on-teal": "#00382d",
+        // Alias — nombres usados en los componentes (mismo valor)
+        "surface-container-lowest": "var(--color-bg)",
+        "surface-container-low": "var(--color-surface-low)",
+        "surface-container": "var(--color-surface)",
+        "surface-container-high": "var(--color-surface-high)",
+        "surface-container-highest": "var(--color-surface-highest)",
 
-        // ── Secondary (blue-slate) ───────────────────────────
-        secondary: "#b6c6ed",
-        "secondary-container": "#374767",
-        "on-secondary": "#20304f",
-        "on-secondary-container": "#a5b5db",
+        "on-surface": "var(--color-text)",
+        "on-surface-variant": "var(--color-text-secondary)",
+        "text-muted": "var(--color-text-muted)",
 
-        // ── Outline & Borders ────────────────────────────────
-        outline: "#a98a7d",
-        "outline-variant": "#5a4136",
-        border: "#233554",
-
-        // ── Error ────────────────────────────────────────────
-        error: "#ffb4ab",
-        "error-container": "#93000a",
-        "on-error": "#690005",
-
-        // ── Legacy aliases (compatibility) ───────────────────
-        dark: "#041329",
-        medium: "#b6c6ed",
-        light: "#0d1c32",
-        success: "#38DEBB",
+        border: "var(--color-border)",
+        "border-2": "var(--color-border-2)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],

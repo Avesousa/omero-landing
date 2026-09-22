@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CheckCircle2, Check, TriangleAlert } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
 const rubros = [
@@ -111,10 +112,13 @@ export default function CTAFinal() {
         {success ? (
           <div className="receipt-card px-8 pt-8 pb-8 mx-auto max-w-md text-left font-mono">
             <div className="text-center mb-4">
-              <div className="text-5xl mb-2" style={{ animation: "bounceSoft 1s ease-in-out 3" }}>
-                🎉
+              <div
+                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal/15 mb-3"
+                style={{ animation: "bounceSoft 1s ease-in-out 2" }}
+              >
+                <CheckCircle2 className="w-8 h-8 text-teal" />
               </div>
-              <h3 className="text-xl font-extrabold text-white font-sans">¡Estás a un paso!</h3>
+              <h3 className="text-xl font-extrabold text-on-surface font-sans">¡Estás a un paso!</h3>
             </div>
             <div className="border-t border-dashed border-border pt-4 text-sm text-on-surface-variant leading-relaxed font-sans">
               Te abrimos WhatsApp para coordinar tu acceso gratuito. Si no se
@@ -128,7 +132,7 @@ export default function CTAFinal() {
             noValidate
           >
             <div className="flex items-center justify-between border-b border-dashed border-border pb-4 mb-6">
-              <h3 className="text-white font-extrabold text-lg font-mono">Alta de comercio</h3>
+              <h3 className="text-on-surface font-extrabold text-lg font-mono">Alta de comercio</h3>
               <span className="text-on-surface-variant/50 text-xs font-mono">60 seg</span>
             </div>
 
@@ -144,7 +148,7 @@ export default function CTAFinal() {
                   onChange={handleChange}
                   placeholder="Juan"
                   required
-                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/40 focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
+                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-on-surface placeholder-on-surface-variant/40 focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
                 />
               </div>
               <div>
@@ -158,7 +162,7 @@ export default function CTAFinal() {
                   onChange={handleChange}
                   placeholder="+54 9 11 ..."
                   required
-                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/40 focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
+                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-on-surface placeholder-on-surface-variant/40 focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
                 />
               </div>
               <div>
@@ -170,7 +174,7 @@ export default function CTAFinal() {
                   value={form.rubro}
                   onChange={handleChange}
                   required
-                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
+                  className="w-full bg-surface-container-low border-2 border-border rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-light transition-colors min-h-[48px] text-sm"
                 >
                   <option value="" disabled>
                     Tu rubro
@@ -186,7 +190,7 @@ export default function CTAFinal() {
 
             {error && (
               <div className="flex items-center gap-2 text-red-400 text-sm mb-4 bg-red-500/10 px-4 py-3 rounded-xl border border-red-500/25">
-                <span>⚠</span>
+                <TriangleAlert className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
@@ -194,7 +198,7 @@ export default function CTAFinal() {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full py-4 rounded-xl text-lg disabled:opacity-60 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98] transition-transform"
+              className="btn-primary inline-flex items-center justify-center gap-2 whitespace-nowrap w-full py-4 rounded-xl text-lg disabled:opacity-60 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98] transition-transform"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -205,14 +209,14 @@ export default function CTAFinal() {
                   Enviando...
                 </span>
               ) : (
-                "Quiero empezar — es gratis →"
+                "Crear mi cuenta"
               )}
             </button>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-5 border-t border-dashed border-border pt-4">
               {["Sin tarjeta de crédito", "14 días gratis", "Cancelás cuando querés"].map((item) => (
                 <span key={item} className="flex items-center gap-1.5 text-on-surface-variant text-sm">
-                  <span className="text-teal font-bold">✓</span>
+                  <Check className="w-4 h-4 text-teal" strokeWidth={3} />
                   {item}
                 </span>
               ))}

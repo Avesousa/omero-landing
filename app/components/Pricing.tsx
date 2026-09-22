@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Check, Lightbulb, Star } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
 function scrollToSection(id: string) {
@@ -94,16 +95,16 @@ export default function Pricing() {
           <span className="eyebrow-chip text-primary-light bg-blue-500/10 border-blue-500/25">
             Precios claros
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 mt-5">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
             Elegí el plan que se adapta a tu negocio
           </h2>
           <p className="text-lg text-on-surface-variant">
-            Empezá gratis. <strong className="text-white">Crecé cuando quieras.</strong> Precios en pesos, sin sorpresas en dólares.
+            Empezá gratis. <strong className="text-on-surface">Crecé cuando quieras.</strong> Precios en pesos, sin sorpresas en dólares.
           </p>
         </div>
 
         <div className="flex items-center justify-center gap-4 mb-12">
-          <span className={`text-sm font-semibold transition-colors ${!annual ? "text-white" : "text-on-surface-variant/50"}`}>
+          <span className={`text-sm font-semibold transition-colors ${!annual ? "text-on-surface" : "text-on-surface-variant/50"}`}>
             Mensual
           </span>
           <button
@@ -117,7 +118,7 @@ export default function Pricing() {
               style={{ left: annual ? 25 : 3 }}
             />
           </button>
-          <span className={`text-sm font-semibold transition-colors ${annual ? "text-white" : "text-on-surface-variant/50"}`}>
+          <span className={`text-sm font-semibold transition-colors ${annual ? "text-on-surface" : "text-on-surface-variant/50"}`}>
             Anual <span className="text-teal font-bold">−2 meses</span>
           </span>
         </div>
@@ -137,15 +138,16 @@ export default function Pricing() {
               >
                 {plan.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
-                    <span className="btn-primary text-[11px] px-4 py-1 rounded-full whitespace-nowrap">
-                      {plan.badge} ⭐
+                    <span className="btn-primary inline-flex items-center gap-1.5 text-[11px] px-4 py-1 rounded-full whitespace-nowrap">
+                      <Star className="w-3 h-3 fill-white" />
+                      {plan.badge}
                     </span>
                   </div>
                 )}
 
-                <h3 className="text-lg font-extrabold text-white mb-3">{plan.name}</h3>
+                <h3 className="text-lg font-extrabold text-on-surface mb-3">{plan.name}</h3>
                 <div className="flex items-baseline gap-1.5 mb-1">
-                  <span className={`text-3xl font-extrabold font-mono ${plan.highlighted ? "text-accent" : "text-white"}`}>
+                  <span className={`text-3xl font-extrabold font-mono ${plan.highlighted ? "text-accent" : "text-on-surface"}`}>
                     {price}
                   </span>
                   <span className="text-xs text-on-surface-variant/60">{period}</span>
@@ -159,8 +161,8 @@ export default function Pricing() {
                 <ul className="space-y-3 mb-7 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2.5 text-sm text-on-surface">
-                      <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${plan.highlighted ? "bg-accent text-white" : "bg-teal-container/20 text-teal"}`}>
-                        ✓
+                      <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${plan.highlighted ? "bg-accent text-white" : "bg-teal/15 text-teal"}`}>
+                        <Check className="w-3 h-3" strokeWidth={3} />
                       </span>
                       {f}
                     </li>
@@ -169,13 +171,13 @@ export default function Pricing() {
 
                 <button
                   onClick={() => handleCTA(plan.name)}
-                  className={`w-full py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 ${
+                  className={`inline-flex items-center justify-center whitespace-nowrap w-full py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 ${
                     plan.highlighted
                       ? "btn-primary"
-                      : "border-2 border-primary-light/40 text-white hover:bg-primary-light/10"
+                      : "border-2 border-primary-light/40 text-on-surface hover:bg-primary-light/10"
                   }`}
                 >
-                  {plan.free ? "Empezá gratis" : "Probar 14 días"}
+                  {plan.free ? "Empezar gratis" : "Probar gratis"}
                 </button>
               </div>
             );
@@ -183,8 +185,9 @@ export default function Pricing() {
         </div>
 
         <div className="text-center bento-card rounded-2xl p-7">
-          <p className="text-white font-medium text-lg">
-            💡 ¿Cuánto perdés por mes sin control de márgenes?{" "}
+          <p className="text-on-surface font-medium text-lg flex items-center justify-center gap-2 flex-wrap">
+            <Lightbulb className="w-5 h-5 text-accent flex-shrink-0" />
+            ¿Cuánto perdés por mes sin control de márgenes?{" "}
             <span className="text-accent font-bold">El plan Pro cuesta menos que una sola venta a pérdida.</span>
           </p>
           <p className="text-on-surface-variant text-sm mt-2">

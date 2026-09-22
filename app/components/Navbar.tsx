@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { trackEvent } from "./Analytics";
+import ThemeToggle from "./ThemeToggle";
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
@@ -28,7 +30,7 @@ export default function Navbar() {
   }, []);
 
   function handleCTA() {
-    trackEvent("cta_click", { location: "navbar", label: "Probar gratis" });
+    trackEvent("cta_click", { location: "navbar", label: "Empezar gratis" });
     scrollToSection("cta-final");
     setMenuOpen(false);
   }
@@ -52,36 +54,38 @@ export default function Navbar() {
               <circle cx="24" cy="25" r="11" fill="none" stroke="white" strokeWidth="6" />
               <polygon points="24,7 29,14 19,14" fill="white" />
             </svg>
-            <span className="text-xl font-extrabold tracking-tight text-white">omero</span>
+            <span className="text-xl font-extrabold tracking-tight text-on-surface">omero</span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-7">
             {links.map((item) => (
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.target)}
-                className="text-sm font-medium text-on-surface-variant hover:text-white transition-colors"
+                className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap"
               >
                 {item.label}
               </button>
             ))}
+            <ThemeToggle />
             <button
               onClick={handleCTA}
-              className="btn-primary text-sm px-5 py-2.5 rounded-xl hover:scale-105 active:scale-95 transition-transform"
+              className="btn-primary inline-flex items-center justify-center whitespace-nowrap text-sm px-5 py-2.5 rounded-xl hover:scale-105 active:scale-95 transition-transform"
             >
-              Probar gratis
+              Empezar gratis
             </button>
           </nav>
 
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none text-white"
-            aria-label="Abrir menú"
-          >
-            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex items-center justify-center w-9 h-9 text-on-surface focus:outline-none"
+              aria-label="Abrir menú"
+            >
+              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -102,9 +106,9 @@ export default function Navbar() {
             ))}
             <button
               onClick={handleCTA}
-              className="btn-primary text-center w-full py-3.5 rounded-xl mt-2"
+              className="btn-primary inline-flex items-center justify-center whitespace-nowrap text-center w-full py-3.5 rounded-xl mt-2"
             >
-              Probar gratis
+              Empezar gratis
             </button>
           </div>
         </div>
