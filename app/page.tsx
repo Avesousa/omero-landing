@@ -1,7 +1,10 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import TrustStrip from "./components/TrustStrip";
 import Problem from "./components/Problem";
+import Comparison from "./components/Comparison";
 import Solution from "./components/Solution";
+import Showcase from "./components/Showcase";
 import Benefits from "./components/Benefits";
 import SocialProof from "./components/SocialProof";
 import Pricing from "./components/Pricing";
@@ -15,8 +18,11 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <TrustStrip />
         <Problem />
+        <Comparison />
         <Solution />
+        <Showcase />
         <Benefits />
         <SocialProof />
         <Pricing />

@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    :root {
+      --bg:#041329; --s-low:#0d1c32; --s:#112036; --s-high:#1c2a41; --s-input:#27354c;
+      --tx:#d6e3ff; --tx2:#b6c6ed; --tx-mut:#8494b4; --bd:#233554; --bd2:#2f4470;
+      --accent:#FF6B00; --teal:#38DEBB; --primary-l:#3B82F6;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Inter", system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--tx); line-height:1.55; }
+    h1,h2,h3,h4,p { margin:0; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { color:#ff8a3d; }
+    @keyframes shimmer { 0%{background-position:-200% center;} 100%{background-position:200% center;} }
+    @keyframes livePulse { 0%,100%{ box-shadow:0 0 0 0 rgba(56,222,187,.5);} 50%{ box-shadow:0 0 0 6px rgba(56,222,187,0);} }
+    .gradient-text { background:linear-gradient(135deg,#FF6B00,#ffb693 50%,#FF6B00); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shimmer 3s linear infinite; }
+    .live-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); animation:livePulse 1.8s ease-in-out infinite; }
+    .col { background:var(--s-low); border:1px solid var(--bd); border-radius:14px; padding:22px; }
+    .col h3 { font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--tx-mut); margin-bottom:16px; }
+    .row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .lbl { font-size:11px; color:var(--tx-mut); margin-top:14px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; }
+
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(180deg,#FF6B00,#E65A00); color:#fff; border:1px solid #ff8533; border-radius:12px; box-shadow:0 0 16px rgba(255,107,0,.25); font-weight:700; font-size:14px; padding:11px 22px; cursor:pointer; }
+    .btn-ghost { display:inline-flex; align-items:center; gap:8px; background:var(--s-high); color:var(--tx2); border:1px solid var(--bd); border-radius:12px; font-weight:600; font-size:14px; padding:11px 22px; cursor:pointer; }
+    .btn-disabled { display:inline-flex; align-items:center; gap:8px; background:#4b5563; color:#9ca3af; border:2px solid #6b7280; border-radius:12px; font-weight:700; font-size:14px; padding:10px 22px; cursor:not-allowed; }
+
+    .badge { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:4px 11px; border-radius:999px; }
+    .badge-green  { background:rgba(56,222,187,.12); color:#38DEBB; border:1px solid rgba(56,222,187,.3); }
+    .badge-red    { background:rgba(239,68,68,.12);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
+    .badge-yellow { background:rgba(245,158,11,.12); color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+    .badge-blue   { background:rgba(59,130,246,.12); color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+    .badge-gray   { background:rgba(107,114,128,.12); color:#8494b4; border:1px solid var(--bd); }
+
+    .o-input { background:var(--s-input); border:1px solid var(--bd); border-radius:6px; color:var(--tx); padding:10px 12px; font-size:13px; font-family:inherit; width:100%; }
+  </style>
+</helmet>
+
+<div style="padding:44px 48px 56px;">
+
+  <div style="max-width:520px; margin-bottom:36px;">
+    <span style="font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);">Omero Design System</span>
+    <h1 style="font-size:34px; font-weight:800; letter-spacing:-.02em; color:#fff; margin:12px 0 8px;">Galería de componentes</h1>
+    <p style="font-size:15px; color:var(--tx2);">Los tokens y componentes reales de la app — Nocturne (oscuro por defecto), Inter 400–800, radios de 6–16px, acento naranja <span style="color:var(--accent); font-weight:700;">#FF6B00</span>.</p>
+  </div>
+
+  <!-- Paleta -->
+  <div class="col" style="margin-bottom:20px;">
+    <h3>Paleta Nocturne</h3>
+    <div style="display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px;">
+      <div><div style="height:56px; border-radius:8px; background:#041329; border:1px solid var(--bd);"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">bg #041329</p></div>
+      <div><div style="height:56px; border-radius:8px; background:#112036; border:1px solid var(--bd);"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">surface #112036</p></div>
+      <div><div style="height:56px; border-radius:8px; background:#1c2a41; border:1px solid var(--bd);"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">surface-high</p></div>
+      <div><div style="height:56px; border-radius:8px; background:#1E40AF;"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">primary #1E40AF</p></div>
+      <div><div style="height:56px; border-radius:8px; background:#FF6B00;"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">accent #FF6B00</p></div>
+      <div><div style="height:56px; border-radius:8px; background:#38DEBB;"></div><p style="font-size:11px; color:var(--tx2); margin-top:6px;">teal #38DEBB</p></div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-bottom:20px;">
+
+    <!-- Botones -->
+    <div class="col">
+      <h3>Botones</h3>
+      <div class="row"><button class="btn-primary">Guardar cambios</button><button class="btn-ghost">Cancelar</button></div>
+      <div class="lbl">Estado deshabilitado</div>
+      <button class="btn-disabled">💳 Finalizar venta</button>
+      <div class="lbl">Enlace</div>
+      <a href="#">Ver documentación →</a>
+    </div>
+
+    <!-- Badges -->
+    <div class="col">
+      <h3>Badges de estado</h3>
+      <div class="row" style="gap:8px;">
+        <span class="badge badge-green">● Activo</span>
+        <span class="badge badge-red">● Sin stock</span>
+        <span class="badge badge-yellow">● Stock bajo</span>
+      </div>
+      <div class="row" style="gap:8px; margin-top:10px;">
+        <span class="badge badge-blue">● En proceso</span>
+        <span class="badge badge-gray">● Archivado</span>
+      </div>
+      <div class="lbl">Live indicator</div>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--teal);"><span class="live-dot"></span> Sincronizado en vivo</span>
+    </div>
+
+    <!-- Inputs -->
+    <div class="col">
+      <h3>Inputs</h3>
+      <div class="lbl">Texto</div>
+      <input class="o-input" value="Coca-Cola 500ml" readonly>
+      <div class="lbl">Select</div>
+      <div class="o-input" style="display:flex; justify-content:space-between; align-items:center;">Bebidas <span style="color:var(--tx-mut);">▾</span></div>
+      <div class="lbl">Con foco</div>
+      <input class="o-input" style="border-color:var(--primary-l);" value="247" readonly>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+
+    <!-- Toggle de tema (funcional) -->
+    <div class="col">
+      <h3>ThemeToggle — probalo</h3>
+      <button onClick="{{ toggleTheme }}" style="{{ toggleStyle }}">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}"><span>☾ Oscuro</span></sc-if>
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><span>☀ Claro</span></sc-if>
+      </button>
+      <div style="{{ previewStyle }}">
+        <p style="font-size:13px; font-weight:700; margin-bottom:4px; color:{{ pTx }};">PageHeader</p>
+        <div style="{{ headerStyle }}">
+          <span style="font-weight:800; font-size:15px; color:{{ pTx }};">omero</span>
+          <span style="font-size:13px; color:{{ pMut }};">Administración · Productos</span>
+        </div>
+        <div style="{{ cardStyle }}">
+          <p style="font-size:13px; font-weight:600; color:{{ pTx }};">o-card</p>
+          <p style="font-size:12px; color:{{ pMut }}; margin-top:4px;">Las overrides del design system adaptan cada componente al tema sin tocar el markup.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CartItem + stat card -->
+    <div class="col">
+      <h3>POS · CartItem</h3>
+      <div style="background:#000; border:1px solid #4b5563; padding:14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+          <span style="width:30px; height:30px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">1</span>
+          <span style="color:#4ade80; font-weight:800; font-size:17px;">$3.480</span>
+        </div>
+        <div style="color:#fff; font-weight:500; font-size:13px; margin-bottom:6px;">Aceite Girasol 1,5L — Natura</div>
+        <div style="display:flex; justify-content:space-between; font-size:12px;"><span style="color:#9ca3af;">Cantidad: 2</span><span style="color:#facc15;">$1.740 c/u</span></div>
+      </div>
+      <div class="lbl">Dashboard · stat card</div>
+      <div style="background:linear-gradient(135deg,rgba(34,197,94,.20),rgba(5,150,105,.20)); border:1px solid rgba(34,197,94,.30); border-radius:10px; padding:13px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#86efac; font-size:11px; font-weight:600;">Ganancias</span><span>💚</span></div>
+        <p style="font-size:18px; font-weight:800; color:#fff;">$95.100 <span style="color:#4ade80; font-size:10px;">↑ 9,7%</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tipografía -->
+  <div class="col">
+    <h3>Tipografía — Inter</h3>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <p style="font-size:34px; font-weight:800; letter-spacing:-.02em; color:#fff;">Display 34 / 800 — <span class="gradient-text">gradient-text</span></p>
+      <p style="font-size:20px; font-weight:700; color:#fff;">Título de sección 20 / 700</p>
+      <p style="font-size:15px; font-weight:400; color:var(--tx2);">Cuerpo 15 / 400 — el operador ingresa 000 para abrir el modal de precio libre y registrar un monto sin producto definido.</p>
+      <p style="font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--tx-mut);">Overline 12 / 600 · uppercase</p>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1180,"height":1320}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dark: true };
+  }
+  renderVals() {
+    const dark = this.state.dark;
+    const pBg   = dark ? "#0d1c32" : "#F0F4F8";
+    const pSurf = dark ? "#112036" : "#FFFFFF";
+    const pTx   = dark ? "#d6e3ff" : "#111827";
+    const pMut  = dark ? "#8494b4" : "#6B7280";
+    const pBd   = dark ? "#233554" : "#D1D5DB";
+    return {
+      isDark: dark,
+      isLight: !dark,
+      toggleTheme: () => this.setState({ dark: !dark }),
+      toggleStyle: "display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;border:1px solid " + pBd + ";background:" + (dark ? "#1c2a41" : "#F8FAFC") + ";color:" + (dark ? "#b6c6ed" : "#374151") + ";font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;",
+      previewStyle: "margin-top:16px;padding:16px;border-radius:12px;background:" + pBg + ";border:1px solid " + pBd + ";",
+      headerStyle: "display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;background:" + pSurf + ";border:1px solid " + pBd + ";margin-bottom:10px;",
+      cardStyle: "padding:14px;border-radius:12px;background:" + pSurf + ";border:1px solid " + pBd + ";box-shadow:0 2px 12px rgba(0,0,0,.15);",
+      pTx, pMut,
+    };
+  }
+}
+</script>
+</body>
+</html>

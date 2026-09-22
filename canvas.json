@@ -1,0 +1,13 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 5150, "title": "Landing v2 — prototipo" },
+    { "file": "Components.dc.html", "x": 1640, "y": 0, "w": 1180, "h": 1320, "title": "Design system" },
+    { "file": "MobileHero.dc.html", "x": 3020, "y": 0, "w": 390, "h": 844, "title": "Hero mobile" }
+  ],
+  "annotations": [
+    { "id": "note-intro", "x": 0, "y": -150, "w": 620, "text": "Omero Landing v2 — híbrida claro→oscuro.\nHero y pricing en claro modernizado; el showcase de POS / Dashboard / Admin usa el Nocturne real de la app.\nClickeable: tabs del showcase, acordeón FAQ, toggle mensual/anual del pricing." },
+    { "id": "note-components", "x": 1640, "y": -120, "w": 380, "text": "Galería del design system con tokens y componentes reales. El ThemeToggle acá funciona: cambia el preview claro/oscuro." },
+    { "id": "note-mobile", "x": 3020, "y": -120, "w": 340, "text": "Hero a 390px para verificar el responsive: CTAs full-width, headline sin desbordes." }
+  ],
+  "launch": { "view": "canvas" }
+}
