@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Check, X } from "lucide-react";
 
 const rows = [
@@ -13,7 +14,7 @@ const rows = [
 
 function Cell({ value }: { value: boolean | string }) {
   if (typeof value === "string") {
-    return <span className="font-mono text-sm">{value}</span>;
+    return <span className="font-mono text-sm whitespace-nowrap">{value}</span>;
   }
   return value ? (
     <Check className="w-5 h-5 text-teal mx-auto" strokeWidth={2.5} />
@@ -38,35 +39,32 @@ export default function Comparison() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border overflow-hidden shadow-2xl">
-          <div className="grid grid-cols-[1fr_auto_auto] bg-surface-container-low">
-            <div className="px-5 py-4" />
-            <div className="px-5 py-4 text-center min-w-[110px]">
-              <span className="text-on-surface-variant/70 font-semibold text-sm">Planilla / Excel</span>
-            </div>
-            <div className="px-5 py-4 text-center min-w-[110px] bg-primary/10 border-l border-primary/20">
-              <span className="text-on-surface font-extrabold text-sm">Omero</span>
-            </div>
+        <div className="grid grid-cols-[1fr_auto_auto] rounded-2xl border border-border overflow-hidden shadow-2xl">
+          <div className="bg-surface-container-low px-5 py-4" />
+          <div className="bg-surface-container-low px-5 py-4 text-center min-w-[110px]">
+            <span className="text-on-surface-variant/70 font-semibold text-sm">Planilla / Excel</span>
+          </div>
+          <div className="bg-surface-container-low px-5 py-4 text-center min-w-[110px] bg-primary/10 border-l border-primary/20">
+            <span className="text-on-surface font-extrabold text-sm">Omero</span>
           </div>
 
-          {rows.map((row, i) => (
-            <div
-              key={row.label}
-              className={`grid grid-cols-[1fr_auto_auto] items-center ${
-                i % 2 === 0 ? "bg-surface" : "bg-surface-container-lowest"
-              }`}
-            >
-              <div className="px-5 py-4 text-on-surface text-sm sm:text-base font-medium">
-                {row.label}
-              </div>
-              <div className="px-5 py-4 text-center min-w-[110px] text-on-surface-variant/70">
-                <Cell value={row.excel} />
-              </div>
-              <div className="px-5 py-4 text-center min-w-[110px] bg-primary/5 border-l border-primary/10">
-                <Cell value={row.omero} />
-              </div>
-            </div>
-          ))}
+          {rows.map((row, i) => {
+            const rowBg = i % 2 === 0 ? "bg-surface" : "bg-surface-container-lowest";
+            const omeroBg = i % 2 === 0 ? "bg-primary/5" : "bg-primary/10";
+            return (
+              <Fragment key={row.label}>
+                <div className={`${rowBg} px-5 py-4 flex items-center text-on-surface text-sm sm:text-base font-medium`}>
+                  {row.label}
+                </div>
+                <div className={`${rowBg} px-5 py-4 flex items-center justify-center text-on-surface-variant/70`}>
+                  <Cell value={row.excel} />
+                </div>
+                <div className={`${omeroBg} px-5 py-4 flex items-center justify-center border-l border-primary/10`}>
+                  <Cell value={row.omero} />
+                </div>
+              </Fragment>
+            );
+          })}
         </div>
       </div>
     </section>

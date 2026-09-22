@@ -8,14 +8,7 @@ function scrollToSection(id: string) {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-surface-container-lowest pt-16 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div
-        className="watermark-text absolute -bottom-8 left-1/2 -translate-x-1/2 text-[18vw] leading-none pointer-events-none select-none whitespace-nowrap"
-        aria-hidden="true"
-      >
-        omero
-      </div>
-
+    <footer className="relative bg-surface-container-lowest pt-16 pb-10 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
           <div className="flex items-center gap-3">

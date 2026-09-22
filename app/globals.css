@@ -364,16 +364,6 @@ body {
   border-color: var(--color-primary-light);
 }
 
-/* ─── Watermark tipográfico (footer) ─────────────────────── */
-.watermark-text {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color-border);
-  opacity: 0.6;
-  user-select: none;
-}
-
 /* ─── Scanline sutil (terminal) ───────────────────────────── */
 .scanlines::before {
   content: "";

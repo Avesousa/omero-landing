@@ -12,6 +12,7 @@ function scrollToSection(id: string) {
 
 const links = [
   { label: "Producto", target: "solucion" },
+  { label: "Componentes", target: "showcase" },
   { label: "Comparación", target: "comparacion" },
   { label: "Precios", target: "pricing" },
   { label: "FAQ", target: "faq" },
