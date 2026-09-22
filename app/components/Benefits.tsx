@@ -96,7 +96,7 @@ export default function Benefits() {
 
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="eyebrow-chip text-accent bg-accent/10 border-accent/25">
+          <span className="eyebrow-chip text-primary-light bg-blue-500/10 border-blue-500/25">
             Funcionalidades
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-on-surface mb-4 mt-5">
@@ -115,8 +115,8 @@ export default function Benefits() {
                 benefit.wide ? "md:col-span-2" : ""
               }`}
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high mb-5">
-                <benefit.icon className="w-6 h-6 text-accent" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-light/[0.14] mb-5">
+                <benefit.icon className="w-6 h-6 text-primary-light" />
               </div>
               <h3 className="text-xl font-bold text-on-surface mb-3">{benefit.title}</h3>
               <p className="text-on-surface-variant leading-relaxed text-sm max-w-md">

@@ -3,12 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
-  Boxes,
+  BarChart3,
   Check,
-  Percent,
-  Receipt,
+  LineChart,
   Star,
-  TrendingUp,
   TriangleAlert,
 } from "lucide-react";
 import { trackEvent } from "./Analytics";
@@ -22,52 +20,121 @@ function formatARS(n: number) {
   return "$" + Math.round(n).toLocaleString("es-AR");
 }
 
-const DAILY_SALES = [62, 48, 71, 55, 88, 100, 40]; // Lun..Dom, % de altura relativa
 const DAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
-const TODAY_INDEX = 5;
+const DAILY_SALES = [32000, 26000, 41000, 30000, 52000, 61000, 22000];
+
+const STATS = [
+  { key: "sales", label: "Ventas", color: "var(--chart-sales)", target: 284900 },
+  { key: "expenses", label: "Gastos", color: "var(--chart-expenses)", target: 42000 },
+  { key: "profit", label: "Ganancia", color: "var(--chart-profit)", target: 108000 },
+  { key: "result", label: "Resultado", color: "var(--chart-result)", target: 66000 },
+];
+
+function useCountUp(target: number, active: boolean, durationMs = 1400) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    const start = performance.now();
+    let raf: number;
+    function tick(now: number) {
+      const progress = Math.min((now - start) / durationMs, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(target * eased);
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active, target, durationMs]);
+  return value;
+}
+
+function StatTile({ label, color, target, active }: { label: string; color: string; target: number; active: boolean }) {
+  const value = useCountUp(target, active);
+  return (
+    <div className="bg-surface-high border border-border rounded-lg px-3 py-2.5">
+      <p className="text-[11px] font-semibold uppercase tracking-wide flex items-center gap-1.5 text-on-surface-variant">
+        <span className="inline-block w-2 h-2 rounded-sm flex-shrink-0" style={{ background: color }} />
+        {label}
+      </p>
+      <p className="font-mono font-extrabold text-base sm:text-lg leading-tight mt-1 text-on-surface">
+        {formatARS(value)}
+      </p>
+    </div>
+  );
+}
+
+function DailyMiniChart({ mode, revealed }: { mode: "bar" | "line"; revealed: boolean }) {
+  const width = 460;
+  const height = 100;
+  const max = Math.max(...DAILY_SALES) * 1.15;
+  const bandW = width / DAILY_SALES.length;
+  const xAt = (i: number) => i * bandW + bandW / 2;
+  const yAt = (v: number) => height - (v / max) * height;
+
+  return (
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className="w-full h-[100px] transition-opacity duration-500"
+      style={{ opacity: revealed ? 1 : 0 }}
+      preserveAspectRatio="none"
+    >
+      {mode === "bar" ? (
+        DAILY_SALES.map((v, i) => {
+          const barW = bandW * 0.56;
+          return (
+            <rect
+              key={i}
+              x={xAt(i) - barW / 2}
+              y={yAt(v)}
+              width={barW}
+              height={height - yAt(v)}
+              rx={3}
+              fill="var(--chart-sales)"
+            />
+          );
+        })
+      ) : (
+        <>
+          <polyline
+            fill="none"
+            stroke="var(--chart-sales)"
+            strokeWidth={2.5}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            points={DAILY_SALES.map((v, i) => `${xAt(i)},${yAt(v)}`).join(" ")}
+          />
+          {DAILY_SALES.map((v, i) => (
+            <circle key={i} cx={xAt(i)} cy={yAt(v)} r={3.5} fill="var(--chart-sales)" stroke="var(--color-surface)" strokeWidth={1.5} />
+          ))}
+        </>
+      )}
+    </svg>
+  );
+}
 
 type Toast = { id: number; amount: number };
 
-/** Mockup del dashboard real de Omero — queda siempre oscuro (Nocturne),
- * independiente del tema de la página, igual que la pantalla del POS
- * real en la app. Es un "screen dentro de screen". */
+/** Mockup del dashboard real de ventas de Omero. A diferencia del POS del
+ * cajero (que la app fuerza siempre oscuro), el dashboard del dueño sí
+ * respeta el tema claro/oscuro — así que este widget hace lo mismo. */
 function SalesDashboard() {
   const [revealed, setRevealed] = useState(false);
-  const [total, setTotal] = useState(0);
+  const [mode, setMode] = useState<"bar" | "line">("bar");
   const [toasts, setToasts] = useState<Toast[]>([]);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const target = 284900;
 
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !revealed) {
-          setRevealed(true);
-        }
+        if (entries[0].isIntersecting) setRevealed(true);
       },
       { threshold: 0.4 }
     );
     observer.observe(el);
     return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (!revealed) return;
-    const start = performance.now();
-    const duration = 1400;
-    let raf: number;
-    function tick(now: number) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setTotal(target * eased);
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [revealed]);
 
   useEffect(() => {
     if (!revealed) return;
@@ -76,7 +143,6 @@ function SalesDashboard() {
       id += 1;
       const amount = Math.round((800 + Math.random() * 2600) / 50) * 50;
       const toastId = id;
-      setTotal((t) => t + amount);
       setToasts((prev) => [...prev, { id: toastId, amount }]);
       setTimeout(() => {
         setToasts((prev) => prev.filter((t) => t.id !== toastId));
@@ -85,79 +151,76 @@ function SalesDashboard() {
     return () => clearInterval(interval);
   }, [revealed]);
 
+  function setChartMode(next: "bar" | "line") {
+    setMode(next);
+    trackEvent("hero_dashboard_chart_toggle", { mode: next });
+  }
+
   return (
     <div ref={wrapRef} className="w-full max-w-lg mx-auto lg:mx-0">
-      <div className="relative rounded-2xl border border-[#233554] bg-[#0d1c32] shadow-2xl overflow-hidden">
+      <div className="relative rounded-2xl border border-border bg-surface shadow-2xl overflow-hidden">
         {/* Chrome */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#233554] bg-[#0a1730]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface-low">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
             <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
-            <span className="text-[#8494b4] text-xs ml-2 font-mono">omero — dashboard</span>
+            <span className="text-on-surface-variant/70 text-xs ml-2 font-mono">omero — dashboard</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-[#8494b4]/70 text-[11px] hidden sm:inline">datos de ejemplo</span>
-            <span className="flex items-center gap-1.5 text-[#38DEBB] text-xs">
+            <span className="text-on-surface-variant/50 text-[11px] hidden sm:inline">datos de ejemplo</span>
+            <span className="flex items-center gap-1.5 text-teal text-xs">
               <span className="live-dot" /> en vivo
             </span>
           </div>
         </div>
 
         <div className="p-5">
-          {/* Total del día */}
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[11px] uppercase tracking-widest text-[#8494b4]">
-              Ventas de hoy
-            </span>
-            <span className="inline-flex items-center gap-1 text-[#38DEBB] text-xs font-bold">
-              <TrendingUp className="w-3.5 h-3.5" />
-              +18% vs. ayer
-            </span>
-          </div>
-          <p className="led-display text-4xl sm:text-5xl font-extrabold mb-4">
-            {formatARS(total)}
-          </p>
-
-          {/* Gráfico de barras — últimos 7 días */}
-          <div className="flex items-end gap-2 h-24 mb-1">
-            {DAILY_SALES.map((h, i) => (
-              <div key={DAY_LABELS[i]} className="flex-1 flex flex-col items-center gap-1.5">
-                <div className="w-full rounded-t bg-[#1c2a41] flex items-end" style={{ height: 72 }}>
-                  <div
-                    className="w-full rounded-t transition-[height] duration-700 ease-out"
-                    style={{
-                      height: revealed ? `${h}%` : "0%",
-                      background: i === TODAY_INDEX ? "#FF6B00" : "#3B82F6",
-                      transitionDelay: `${i * 60}ms`,
-                    }}
-                  />
-                </div>
-                <span className="text-[10px] text-[#8494b4] font-mono">{DAY_LABELS[i]}</span>
-              </div>
+          {/* Ventas / Gastos / Ganancia / Resultado */}
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            {STATS.map((s) => (
+              <StatTile key={s.key} label={s.label} color={s.color} target={s.target} active={revealed} />
             ))}
           </div>
 
-          {/* Stats secundarias */}
-          <div className="grid grid-cols-3 gap-2 mt-4">
-            {[
-              { icon: Percent, label: "Margen prom.", value: "38%" },
-              { icon: Receipt, label: "Ventas hoy", value: "64" },
-              { icon: Boxes, label: "Productos", value: "1.284" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-[#112036] border border-[#233554] rounded-lg px-3 py-2.5">
-                <stat.icon className="w-3.5 h-3.5 text-[#8494b4] mb-1.5" />
-                <p className="text-white font-mono font-extrabold text-base leading-none">{stat.value}</p>
-                <p className="text-[#8494b4] text-[10px] mt-1">{stat.label}</p>
-              </div>
+          {/* Selector barras / líneas */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] uppercase tracking-widest text-on-surface-variant/70">
+              Ventas — últimos 7 días
+            </span>
+            <div className="inline-flex rounded-lg border border-border overflow-hidden">
+              {(["bar", "line"] as const).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setChartMode(m)}
+                  aria-pressed={mode === m}
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                    mode === m
+                      ? "bg-primary-light/15 text-on-surface"
+                      : "text-on-surface-variant hover:text-on-surface"
+                  }`}
+                >
+                  {m === "bar" ? <BarChart3 className="w-3.5 h-3.5" /> : <LineChart className="w-3.5 h-3.5" />}
+                  {m === "bar" ? "Barras" : "Líneas"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <DailyMiniChart mode={mode} revealed={revealed} />
+          <div className="flex mt-1.5">
+            {DAY_LABELS.map((d) => (
+              <span key={d} className="flex-1 text-center text-[10px] text-on-surface-variant/60 font-mono">
+                {d}
+              </span>
             ))}
           </div>
 
           {/* Alerta de stock */}
-          <div className="flex items-center gap-2.5 mt-3 bg-red-500/10 border border-red-500/25 rounded-lg px-3 py-2.5">
+          <div className="flex items-center gap-2.5 mt-4 bg-red-500/10 border border-red-500/25 rounded-lg px-3 py-2.5">
             <TriangleAlert className="w-4 h-4 text-red-400 flex-shrink-0" />
-            <p className="text-xs text-red-300">
-              Stock bajo: <span className="text-white font-medium">Harina 1kg</span> — quedan 3 u.
+            <p className="text-xs text-red-400">
+              Stock bajo: <span className="text-on-surface font-medium">Harina 1kg</span> — quedan 3 u.
             </p>
           </div>
         </div>
@@ -167,12 +230,12 @@ function SalesDashboard() {
           {toasts.map((t) => (
             <div
               key={t.id}
-              className="bg-[#112036] border border-[#233554] rounded-full px-4 py-2 shadow-xl flex items-center gap-2 text-sm"
+              className="bg-surface border border-border rounded-full px-4 py-2 shadow-xl flex items-center gap-2 text-sm"
               style={{ animation: "fadeInUp 0.3s ease-out forwards" }}
             >
               <span className="live-dot" />
-              <span className="text-[#38DEBB] font-mono font-semibold">+{formatARS(t.amount)}</span>
-              <span className="text-[#8494b4]">venta nueva</span>
+              <span className="text-teal font-mono font-semibold">+{formatARS(t.amount)}</span>
+              <span className="text-on-surface-variant">venta nueva</span>
             </div>
           ))}
         </div>
@@ -244,7 +307,7 @@ export default function Hero() {
             <p className="text-xl text-on-surface-variant mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Este panel se actualiza como el tuyo lo haría.{" "}
               <span className="text-on-surface font-semibold">
-                Ventas, margen y stock, siempre a la vista.
+                Ventas, gastos, ganancia y resultado, siempre a la vista.
               </span>
             </p>
 

@@ -46,7 +46,7 @@ function FAQItem({
         className="w-full flex items-center gap-4 px-6 py-5 text-left hover:bg-surface-container-high transition-colors"
         aria-expanded={isOpen}
       >
-        <span className="font-mono text-accent/70 text-sm font-bold flex-shrink-0">
+        <span className="font-mono text-primary-light/70 text-sm font-bold flex-shrink-0">
           {String(index + 1).padStart(2, "0")}
         </span>
         <span className="font-semibold text-on-surface text-base flex-1">{question}</span>

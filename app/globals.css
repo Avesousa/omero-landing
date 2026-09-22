@@ -10,6 +10,12 @@
 :root {
   --font-inter: "Inter", sans-serif;
 
+  /* Dashboard chart series — idénticos a /omero */
+  --chart-sales:    #a78bfa;
+  --chart-expenses: #f87171;
+  --chart-profit:   #34d399;
+  --chart-result:   #facc15;
+
   /* Marca — fija en ambos temas */
   --color-primary:       #1E40AF;
   --color-primary-deep:  #1e3a8a;
@@ -38,6 +44,11 @@
 }
 
 :root[data-theme="light"] {
+  --chart-sales:    #7c3aed;
+  --chart-expenses: #dc2626;
+  --chart-profit:   #059669;
+  --chart-result:   #a16207;
+
   --color-primary-light:   #2563EB;
   --color-teal:            #0d9488;
   --color-success:         #16a34a;
@@ -350,7 +361,7 @@ body {
 
 .bento-card:hover {
   background: var(--color-surface-high);
-  border-color: rgba(255, 107, 0, 0.35);
+  border-color: var(--color-primary-light);
 }
 
 /* ─── Watermark tipográfico (footer) ─────────────────────── */

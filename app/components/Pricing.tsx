@@ -186,9 +186,9 @@ export default function Pricing() {
 
         <div className="text-center bento-card rounded-2xl p-7">
           <p className="text-on-surface font-medium text-lg flex items-center justify-center gap-2 flex-wrap">
-            <Lightbulb className="w-5 h-5 text-accent flex-shrink-0" />
+            <Lightbulb className="w-5 h-5 text-primary-light flex-shrink-0" />
             ¿Cuánto perdés por mes sin control de márgenes?{" "}
-            <span className="text-accent font-bold">El plan Pro cuesta menos que una sola venta a pérdida.</span>
+            <span className="text-primary-light font-bold">El plan Pro cuesta menos que una sola venta a pérdida.</span>
           </p>
           <p className="text-on-surface-variant text-sm mt-2">
             Garantía de 30 días. Si no te sirve, te devolvemos el dinero sin preguntas.

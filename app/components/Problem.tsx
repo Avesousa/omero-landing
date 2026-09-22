@@ -56,8 +56,8 @@ export default function Problem() {
               key={problem.title}
               className="bento-card rounded-2xl p-8 hover:-translate-y-1"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-surface-container-high mb-5">
-                <problem.icon className="w-6 h-6 text-on-surface-variant" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-light/[0.14] mb-5">
+                <problem.icon className="w-6 h-6 text-primary-light" />
               </div>
 
               <h3 className="text-xl font-bold text-on-surface mb-3">{problem.title}</h3>
