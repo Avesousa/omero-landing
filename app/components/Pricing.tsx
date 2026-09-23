@@ -4,21 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { Check, Lightbulb, Star } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-}
-
-const plans = [
+/** code = PlanCode de omero-billing (el alta toma precios y trial reales de la API). */
+const plans: Array<{
+  code: "BASICO" | "PRO" | "CADENA";
+  name: string;
+  monthly: number;
+  annual: number;
+  free?: boolean;
+  features: string[];
+  highlighted: boolean;
+  badge?: string;
+}> = [
   {
-    name: "Starter",
-    monthly: 0,
-    annual: 0,
-    free: true,
-    features: ["Hasta 50 productos", "1 usuario", "POS + control de stock", "Soporte por email"],
-    highlighted: false,
-  },
-  {
+    code: "BASICO",
     name: "Básico",
     monthly: 14900,
     annual: 149000,
@@ -26,6 +24,7 @@ const plans = [
     highlighted: false,
   },
   {
+    code: "PRO",
     name: "Pro",
     monthly: 32900,
     annual: 329000,
@@ -40,6 +39,7 @@ const plans = [
     badge: "Más elegido",
   },
   {
+    code: "CADENA",
     name: "Cadena",
     monthly: 69900,
     annual: 699000,
@@ -75,9 +75,9 @@ export default function Pricing() {
     };
   }, []);
 
-  function handleCTA(planName: string) {
-    trackEvent("cta_click", { location: "pricing", label: "Probar", plan: planName });
-    scrollToSection("cta-final");
+  function handleCTA(plan: (typeof plans)[number]) {
+    trackEvent("cta_click", { location: "pricing", label: "Probar", plan: plan.name });
+    window.location.href = `/registro?plan=${plan.code}&intervalo=${annual ? "ANNUAL" : "MONTHLY"}`;
   }
 
   return (
@@ -123,7 +123,7 @@ export default function Pricing() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 items-start">
           {plans.map((plan) => {
             const price = plan.free ? "Gratis" : formatARS(annual ? plan.annual : plan.monthly);
             const period = plan.free ? "para siempre" : annual ? "/ año" : "/ mes";
@@ -170,7 +170,7 @@ export default function Pricing() {
                 </ul>
 
                 <button
-                  onClick={() => handleCTA(plan.name)}
+                  onClick={() => handleCTA(plan)}
                   className={`inline-flex items-center justify-center whitespace-nowrap w-full py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 ${
                     plan.highlighted
                       ? "btn-primary"
