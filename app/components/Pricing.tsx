@@ -4,30 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import { Check, Lightbulb, Star } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-}
-
-/** code = PlanCode de omero-billing (el alta toma precios y trial reales de la API). Los planes free no tienen code: no pasan por el alta con suscripción. */
+/** code = PlanCode de omero-billing (el alta toma precios y trial reales de la API). */
 const plans: Array<{
-  code?: "BASICO" | "PRO" | "CADENA";
+  code: "BASICO" | "PRO" | "CADENA";
   name: string;
   monthly: number;
   annual: number;
-  free?: boolean;
   features: string[];
   highlighted: boolean;
   badge?: string;
 }> = [
-  {
-    name: "Starter",
-    monthly: 0,
-    annual: 0,
-    free: true,
-    features: ["Hasta 50 productos", "1 usuario", "POS + control de stock", "Soporte por email"],
-    highlighted: false,
-  },
   {
     code: "BASICO",
     name: "Básico",
@@ -90,10 +76,6 @@ export default function Pricing() {
 
   function handleCTA(plan: (typeof plans)[number]) {
     trackEvent("cta_click", { location: "pricing", label: "Probar", plan: plan.name });
-    if (plan.free || !plan.code) {
-      scrollToSection("cta-final");
-      return;
-    }
     window.location.href = `/registro?plan=${plan.code}&intervalo=${annual ? "ANNUAL" : "MONTHLY"}`;
   }
 
@@ -116,7 +98,7 @@ export default function Pricing() {
             Elegí el plan que se adapta a tu negocio
           </h2>
           <p className="text-lg text-on-surface-variant">
-            Empezá gratis. <strong className="text-on-surface">Crecé cuando quieras.</strong> Precios en pesos, sin sorpresas en dólares.
+            Probá 14 días gratis. <strong className="text-on-surface">Crecé cuando quieras.</strong> Precios en pesos, sin sorpresas en dólares.
           </p>
         </div>
 
@@ -140,10 +122,10 @@ export default function Pricing() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 items-start">
           {plans.map((plan) => {
-            const price = plan.free ? "Gratis" : formatARS(annual ? plan.annual : plan.monthly);
-            const period = plan.free ? "para siempre" : annual ? "/ año" : "/ mes";
+            const price = formatARS(annual ? plan.annual : plan.monthly);
+            const period = annual ? "/ año" : "/ mes";
             return (
               <div
                 key={plan.name}
@@ -170,7 +152,7 @@ export default function Pricing() {
                   <span className="text-xs text-on-surface-variant/60">{period}</span>
                 </div>
                 <p className="text-teal text-xs font-bold min-h-[16px] mb-4">
-                  {!plan.free && "14 días gratis incluidos"}
+                  14 días gratis incluidos
                 </p>
 
                 <div className="h-px bg-border mb-5" />
@@ -194,7 +176,7 @@ export default function Pricing() {
                       : "border-2 border-primary-light/40 text-on-surface hover:bg-primary-light/10"
                   }`}
                 >
-                  {plan.free ? "Empezar gratis" : "Probar gratis"}
+                  Probar gratis
                 </button>
               </div>
             );
