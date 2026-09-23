@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { Check, Lightbulb, Star } from "lucide-react";
 import { trackEvent } from "./Analytics";
 
-/** code = PlanCode de omero-billing (el alta toma precios y trial reales de la API). */
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+}
+
+/** code = PlanCode de omero-billing (el alta toma precios y trial reales de la API). Los planes free no tienen code: no pasan por el alta con suscripción. */
 const plans: Array<{
-  code: "BASICO" | "PRO" | "CADENA";
+  code?: "BASICO" | "PRO" | "CADENA";
   name: string;
   monthly: number;
   annual: number;
@@ -15,6 +20,14 @@ const plans: Array<{
   highlighted: boolean;
   badge?: string;
 }> = [
+  {
+    name: "Starter",
+    monthly: 0,
+    annual: 0,
+    free: true,
+    features: ["Hasta 50 productos", "1 usuario", "POS + control de stock", "Soporte por email"],
+    highlighted: false,
+  },
   {
     code: "BASICO",
     name: "Básico",
@@ -77,6 +90,10 @@ export default function Pricing() {
 
   function handleCTA(plan: (typeof plans)[number]) {
     trackEvent("cta_click", { location: "pricing", label: "Probar", plan: plan.name });
+    if (plan.free || !plan.code) {
+      scrollToSection("cta-final");
+      return;
+    }
     window.location.href = `/registro?plan=${plan.code}&intervalo=${annual ? "ANNUAL" : "MONTHLY"}`;
   }
 
@@ -123,7 +140,7 @@ export default function Pricing() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10 items-start">
           {plans.map((plan) => {
             const price = plan.free ? "Gratis" : formatARS(annual ? plan.annual : plan.monthly);
             const period = plan.free ? "para siempre" : annual ? "/ año" : "/ mes";
